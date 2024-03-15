@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import no.uio.ifi.in2000.team11.havvarselapp.ui.SeaMapScreen
+import no.uio.ifi.in2000.team11.havvarselapp.ui.SimpleMetAlertScreen
 import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,8 +52,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SeaMapScreen()
-                    // SimpleMetAlertScreen()
+                    // SeaMapScreen()
+                    SimpleMetAlertScreen()
                 }
             }
         }

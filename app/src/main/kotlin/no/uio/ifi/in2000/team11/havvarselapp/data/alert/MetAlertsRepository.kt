@@ -1,6 +1,5 @@
-package no.uio.ifi.in2000.team11.havvarselapp.data
+package no.uio.ifi.in2000.team11.havvarselapp.data.alert
 
-import no.uio.ifi.in2000.team11.havvarselapp.data.alert.MetAlertsDataSource
 import no.uio.ifi.in2000.team11.havvarselapp.model.alert.MetAlert
 
 interface MetAlertsRepository {

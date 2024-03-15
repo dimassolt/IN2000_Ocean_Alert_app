@@ -33,7 +33,7 @@ class MetAlertsDataSource {
         try {
             val response =
                 client.get("https://gw-uio.intark.uh-it.no/in2000/" +
-                        "weatherapi/metalerts/2.0/current.json")
+                        "weatherapi/metalerts/2.0/current.json?lat=70.9&lon=24.8")
 
             Log.d(
                 "MET_ALERTS_DATA_SOURCE",

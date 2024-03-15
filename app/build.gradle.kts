@@ -31,6 +31,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -55,8 +56,8 @@ secrets {
     // name of file containing data that should not be included in git
     propertiesFileName = "secrets.properties"
 
-    // A properties file containing default secret values. This file can be
-    // checked in version control.
+    // A properties file containing default secret values.
+    // This file can be checked in version control.
     defaultPropertiesFileName = "local.defaults.properties"
 
     // Configure which keys should be ignored by the plugin by providing regular expressions.
@@ -64,7 +65,6 @@ secrets {
     ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
     ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
-
 
 dependencies {
     // Android core

@@ -19,12 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import no.uio.ifi.in2000.team11.havvarselapp.model.MetAlert
+import no.uio.ifi.in2000.team11.havvarselapp.model.alert.MetAlert
 
 @Composable
 fun SimpleMetAlertScreen(
     simpleViewModel: SimpleViewModel = viewModel()
-    //TODO legg til NavController
+    //TODO legg til NavController hvis vi skal ha med denne skjermen i MVP-en
 ) {
 
     // Observe the UI state object from the ViewModel

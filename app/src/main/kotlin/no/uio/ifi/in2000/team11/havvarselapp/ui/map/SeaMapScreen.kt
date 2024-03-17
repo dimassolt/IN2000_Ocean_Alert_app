@@ -1,4 +1,4 @@
-package no.uio.ifi.in2000.team11.havvarselapp.ui
+package no.uio.ifi.in2000.team11.havvarselapp.ui.map
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 import no.uio.ifi.in2000.team11.havvarselapp.R
 
@@ -28,8 +29,12 @@ fun SeaMapScreen() {
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
+        uiSettings = MapUiSettings(
+            myLocationButtonEnabled = true
+        ),
         properties = MapProperties(
-            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle)
+            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle),
+            isMyLocationEnabled = true,
         )
     ) {
 

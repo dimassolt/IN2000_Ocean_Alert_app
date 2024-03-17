@@ -29,12 +29,4 @@ class LocationForecastDataSource {
         val locationforecast: LocationForecast = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0//compact?lat=${lat}&lon=${lon}").body()
         return locationforecast
     }
-
-
 }
-
-
-
-
-
-//

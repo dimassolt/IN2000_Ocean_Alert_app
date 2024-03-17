@@ -16,10 +16,13 @@ import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.UrlTileProvider
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.TileOverlay
 import com.google.maps.android.compose.rememberCameraPositionState
 import no.uio.ifi.in2000.team11.havvarselapp.R
+import java.net.URL
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -66,5 +69,13 @@ fun SeaMap() {
             mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle),
             isMyLocationEnabled = true,
         )
-    )
+    ) {
+        TileOverlay(
+            tileProvider = object : UrlTileProvider(256, 256) {
+                override fun getTileUrl(x: Int, y: Int, z: Int): URL {
+                    return URL("https://t1.openseamap.org/seamark/$z/$x/$y.png")
+                }
+            }
+        )
+    }
 }

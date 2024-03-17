@@ -107,6 +107,24 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                     //textAlign = TextAlign.Right
                 )
             }
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)){
+                Text(text = "Nedbør: ",
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    fontWeight = FontWeight.Bold
+                )
+                Text(text = "${weatherInfo?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_from_direction}  ${weatherInfo?.properties?.meta?.units?.precipitation_amount}",
+
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    //textAlign = TextAlign.Right
+                )
+            }
         }
     }
 }

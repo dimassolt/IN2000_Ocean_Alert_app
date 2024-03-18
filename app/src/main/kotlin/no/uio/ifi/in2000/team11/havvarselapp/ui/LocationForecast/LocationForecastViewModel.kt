@@ -1,7 +1,6 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.LocationForecast
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -36,7 +35,7 @@ class LocationForecastViewModel(
 
     fun loadForecast(lat: String, lon: String) {
         if (isAPiCalled.iscalled) {
-            return;
+            return
         }
         else {
             viewModelScope.launch(Dispatchers.IO) {

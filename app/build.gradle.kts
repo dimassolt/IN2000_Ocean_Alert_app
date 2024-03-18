@@ -116,4 +116,7 @@ dependencies {
 
     // Android Desugaring for å kunne bruke ZonedDateTime
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    //TODO fin kommentar :)
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
 }

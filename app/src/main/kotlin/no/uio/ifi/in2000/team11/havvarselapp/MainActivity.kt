@@ -13,15 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import no.uio.ifi.in2000.team11.havvarselapp.ui.SeaMapScreen
-import no.uio.ifi.in2000.team11.havvarselapp.ui.SimpleMetAlertScreen
+import no.uio.ifi.in2000.team11.havvarselapp.ui.navigation.NavScreen
 import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
 
 class MainActivity : ComponentActivity() {
 
     // klient for å kunne hente posisjon
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +50,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // SeaMapScreen()
-                    SimpleMetAlertScreen()
+                    NavScreen()
                 }
             }
         }

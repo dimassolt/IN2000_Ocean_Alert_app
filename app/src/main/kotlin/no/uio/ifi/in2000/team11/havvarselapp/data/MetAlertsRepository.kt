@@ -1,3 +1,4 @@
+/*
 package no.uio.ifi.in2000.team11.havvarselapp.data
 
 import com.google.android.gms.maps.model.LatLng
@@ -5,9 +6,13 @@ import no.uio.ifi.in2000.team11.havvarselapp.data.alert.MetAlertsDataSource
 import no.uio.ifi.in2000.team11.havvarselapp.model.alert.MetAlert
 
 interface MetAlertsRepository {
-    /** Returnerer farevarsler på den gitte posisjonen, som en liste MetAlert-objekter */
+    */
+/** Returnerer farevarsler på den gitte posisjonen, som en liste MetAlert-objekter *//*
+
     suspend fun getMetAlertsAtPosition(): List<MetAlert>
-    /** Returnerer alle farevarsler i Norge, som en liste MetAlert-objekter */
+    */
+/** Returnerer alle farevarsler i Norge, som en liste MetAlert-objekter *//*
+
     suspend fun getMetAlertsInNorway(): List<MetAlert>
 }
 
@@ -29,4 +34,4 @@ class MetAlertsRepositoryImpl(
     override suspend fun getMetAlertsInNorway(): List<MetAlert> {
         return dataSource.fetchAllMetAlerts()
     }
-}
+}*/

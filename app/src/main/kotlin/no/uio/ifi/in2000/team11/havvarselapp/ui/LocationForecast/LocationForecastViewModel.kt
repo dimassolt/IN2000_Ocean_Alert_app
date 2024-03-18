@@ -1,6 +1,7 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.LocationForecast
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,6 +18,7 @@ import no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast.LocationFore
 
 data class IsAPiCalled( // for å unngå for mange API kall
     var iscalled: Boolean = false
+
 )
 
 

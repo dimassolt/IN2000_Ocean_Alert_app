@@ -1,4 +1,4 @@
-package no.uio.ifi.in2000.team11.havvarselapp.ui
+package no.uio.ifi.in2000.team11.havvarselapp.ui.metalert
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

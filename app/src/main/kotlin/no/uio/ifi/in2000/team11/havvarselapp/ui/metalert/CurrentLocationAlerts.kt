@@ -1,4 +1,4 @@
-package no.uio.ifi.in2000.team11.havvarselapp.ui
+package no.uio.ifi.in2000.team11.havvarselapp.ui.metalert
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,44 +22,71 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import no.uio.ifi.in2000.team11.havvarselapp.model.alert.MetAlert
 
 @Composable
-fun SimpleMetAlertScreen(
+fun CurrentLocationAlert(
     simpleViewModel: SimpleViewModel = viewModel()
 ) {
+    // TODO will be used with current location, "oslo" for now
+    var currentLocation: String = "oslo"
 
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by simpleViewModel.appUiState.collectAsState()
 
-    Scaffold { innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            // Title
+// Bruker funksjonen for å filtrere 'allMetAlert' listen basert på 'areal' feltet.
+// Funksjon som sjekker om en streng inneholder ordet "oslo" i en case-insensitive måte.
+    fun String.containsIgnoreCase(other: String): Boolean {
+        return this.contains(other, ignoreCase = true)
+    }
+// Denne listen vil bare inneholde elementer hvor 'areal' har ordet "oslo".
+    val filteredMetAlerts = appUiState.allMetAlerts.filter {
+        it.area.containsIgnoreCase(currentLocation)
+    }
+
+    if(filteredMetAlerts.size == 0){
+        Column {
             Text(
-                text = "Farevarsler",
+                text = "Ingen farevarsler i \n\n${currentLocation} området!",
                 fontSize = 35.sp,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .paddingFromBaseline(50.dp, 10.dp)
             )
+        }
+    }
+    else {
 
-            // Display all parties
-            LazyVerticalGrid(
-                modifier = Modifier.padding(innerPadding),
-                columns = GridCells.Fixed(1)
+        Scaffold { innerPadding ->
+            Column(
+                modifier = Modifier.padding(innerPadding)
             ) {
-                items(
-                    count = appUiState.allMetAlerts.size,
-                    key = { index -> appUiState.allMetAlerts[index].id }
-                ) { index ->
-                    MetAlertCard(metAlert = appUiState.allMetAlerts[index])
+                // Title
+                Text(
+                    text = "Farevarsler",
+                    fontSize = 35.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .paddingFromBaseline(50.dp, 10.dp)
+                )
+
+                // Display all parties
+                LazyVerticalGrid(
+                    modifier = Modifier.padding(innerPadding),
+                    columns = GridCells.Fixed(1)
+                ) {
+                    items(
+                        count = filteredMetAlerts.size,
+                        key = { index -> filteredMetAlerts[index].id }
+                    ) { index ->
+                        MetAlertCardCurrent(metAlert = filteredMetAlerts[index])
+                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun MetAlertCard(metAlert: MetAlert) {
+fun MetAlertCardCurrent(metAlert: MetAlert) {
     Card(
         modifier = Modifier
             .clipToBounds()

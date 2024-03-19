@@ -41,7 +41,7 @@ fun CurrentLocationAlert(
         it.area.containsIgnoreCase(currentLocation)
     }
 
-    if(filteredMetAlerts.size == 0){
+    if(filteredMetAlerts.isEmpty()){
         Column {
             Text(
                 text = "Ingen farevarsler i \n\n${currentLocation} området!",

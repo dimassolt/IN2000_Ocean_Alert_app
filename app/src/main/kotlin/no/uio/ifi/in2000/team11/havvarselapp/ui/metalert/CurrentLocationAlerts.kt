@@ -26,7 +26,7 @@ fun CurrentLocationAlert(
     simpleViewModel: SimpleViewModel = viewModel()
 ) {
     // TODO will be used with current location, "oslo" for now
-    var currentLocation: String = "oslo"
+    var currentLocation: String = "b2"
 
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by simpleViewModel.appUiState.collectAsState()

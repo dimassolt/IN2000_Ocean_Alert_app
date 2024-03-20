@@ -92,43 +92,6 @@ fun CurrentLocationAlert(
     }
 }
 
-
-/*
-@Composable
-fun MetAlertCardCurrent(metAlert: MetAlert) {
-
-    Card(
-        modifier = Modifier
-            .clipToBounds()
-            .padding(16.dp)
-    ) {
-
-        // Henter ikonet ved hjelp av metAlert API
-        GetIcon(type = metAlert.awarenessType[1], color = metAlert.riskMatrixColor)
-
-        Text(
-            text = metAlert.area,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        )
-
-        Text(
-            text = metAlert.description,
-            modifier = Modifier
-                .padding(3.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-        Text(
-            text = metAlert.instruction,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            color = Color.Blue
-        )
-    }
-
-}*/
-
 @Composable
 fun MetAlertCardCurrent(metAlert: MetAlert) {
     Card(

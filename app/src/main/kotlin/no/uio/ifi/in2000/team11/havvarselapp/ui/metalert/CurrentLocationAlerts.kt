@@ -1,6 +1,8 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.metalert
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -26,7 +28,7 @@ fun CurrentLocationAlert(
     simpleViewModel: SimpleViewModel = viewModel()
 ) {
     // TODO will be used with current location, "oslo" for now
-    var currentLocation: String = "b2"
+    val currentLocation: String = "b2"
 
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by simpleViewModel.appUiState.collectAsState()
@@ -77,6 +79,7 @@ fun CurrentLocationAlert(
                         key = { index -> filteredMetAlerts[index].id }
                     ) { index ->
                         MetAlertCardCurrent(metAlert = filteredMetAlerts[index])
+
                     }
                 }
             }
@@ -87,17 +90,29 @@ fun CurrentLocationAlert(
 
 @Composable
 fun MetAlertCardCurrent(metAlert: MetAlert) {
+
     Card(
         modifier = Modifier
             .clipToBounds()
             .padding(16.dp)
     ) {
+
+        GetIcon(type = metAlert.awarenessType[1].trim(), color = metAlert.riskMatrixColor)
         Text(
             text = metAlert.area,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )
+
+    Text(
+            text = metAlert.awarenessType[1],
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+        )
+
+
         Text(
             text = metAlert.awarenessLevel.toString(),
             modifier = Modifier

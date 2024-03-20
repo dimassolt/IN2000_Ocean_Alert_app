@@ -89,8 +89,11 @@ class MetAlertsDataSource {
                 val awarenessLevel =
                     awarenessLevelStr.split(";")
 
+                /**
+                 * Det var feil ved henting av farevarsel type
+                 */
                 // parser fra "1; wind" til en List<String>
-                val awarenessTypeStr = alert.getJSONObject("properties").getString("type")
+                val awarenessTypeStr = alert.getJSONObject("properties").getString("awareness_type")
                 val awarenessType = awarenessTypeStr.split(";")
 
                 // parser datoene til et StartStopDate-objekt

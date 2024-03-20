@@ -3,8 +3,13 @@ package no.uio.ifi.in2000.team11.havvarselapp.ui.metalert
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -28,7 +33,7 @@ fun CurrentLocationAlert(
     simpleViewModel: SimpleViewModel = viewModel()
 ) {
     // TODO will be used with current location, "oslo" for now
-    val currentLocation: String = "b2"
+    val currentLocation: String = ""
 
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by simpleViewModel.appUiState.collectAsState()
@@ -88,6 +93,7 @@ fun CurrentLocationAlert(
 }
 
 
+/*
 @Composable
 fun MetAlertCardCurrent(metAlert: MetAlert) {
 
@@ -97,7 +103,9 @@ fun MetAlertCardCurrent(metAlert: MetAlert) {
             .padding(16.dp)
     ) {
 
-        GetIcon(type = metAlert.awarenessType[1].trim(), color = metAlert.riskMatrixColor)
+        // Henter ikonet ved hjelp av metAlert API
+        GetIcon(type = metAlert.awarenessType[1], color = metAlert.riskMatrixColor)
+
         Text(
             text = metAlert.area,
             fontWeight = FontWeight.Bold,
@@ -105,21 +113,6 @@ fun MetAlertCardCurrent(metAlert: MetAlert) {
                 .align(Alignment.CenterHorizontally)
         )
 
-    Text(
-            text = metAlert.awarenessType[1],
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        )
-
-
-        Text(
-            text = metAlert.awarenessLevel.toString(),
-            modifier = Modifier
-                .padding(3.dp)
-                .align(Alignment.CenterHorizontally),
-            color = Color.Magenta
-        )
         Text(
             text = metAlert.description,
             modifier = Modifier
@@ -132,5 +125,60 @@ fun MetAlertCardCurrent(metAlert: MetAlert) {
                 .align(Alignment.CenterHorizontally),
             color = Color.Blue
         )
+    }
+
+}*/
+
+@Composable
+fun MetAlertCardCurrent(metAlert: MetAlert) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth() // Fylle maksimal bredde som er tilgjengelig
+            .padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth() // Fylle maksimal bredde som er tilgjengelig
+                .padding(16.dp) // Sett padding for innholdet i kortet
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(100.dp) // Sett en fast størrelse for boksen som ikonet skal være inne i
+            ) {
+                // Ikonet hentes og vises
+                GetIcon(type = metAlert.awarenessType[1], color = metAlert.riskMatrixColor)
+            }
+            // Spacer legger til et mellomrom mellom ikonet og teksten
+            Spacer(Modifier.width(8.dp))
+
+            // Sett resten av teksten til å ta opp så mye plass som mulig
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f) // Sett et vektsystem for å fylle tilgjengelig plass
+                    .padding(start = 8.dp) // Sett padding mellom ikonet og teksten
+            ) {
+                Text(
+                    text = metAlert.area,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .align(Alignment.Start) // Venstrejuster teksten
+                )
+
+                Text(
+                    text = metAlert.description,
+                    modifier = Modifier
+                        .padding(top = 3.dp) // Legger til litt plass over denne teksten
+                        .align(Alignment.Start) // Venstrejuster teksten
+                )
+                Text(
+                    text = metAlert.instruction,
+                    modifier = Modifier
+                        .align(Alignment.Start), // Venstrejuster teksten
+                    color = Color.Blue
+                )
+            }
+        }
     }
 }

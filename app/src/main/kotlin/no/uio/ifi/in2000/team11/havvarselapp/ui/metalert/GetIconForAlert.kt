@@ -19,7 +19,7 @@ fun GetIcon(type: String, color: String) {
     val resources = context.resources
 
     // Bygger strengen som representerer filnavnet til ikonet
-    val iconName = "icon_warning_${type}_${color}".lowercase()
+    val iconName = "icon_warning_${type.trim()}_${color}".lowercase()
 
     // Få Drawable ressurs ID for det dynamisk konstruerte ikonnavnet
     @DrawableRes

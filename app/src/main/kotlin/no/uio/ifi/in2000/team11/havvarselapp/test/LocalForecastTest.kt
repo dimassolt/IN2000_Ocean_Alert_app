@@ -19,14 +19,16 @@ fun TestLocationForecastDataSource() {
     LaunchedEffect(key1 = Unit) {
         coroutineScope.launch {
             try {
-                val locationForecast = dataSource.fetchLocationForecast_LatAndLon( "59.9", "10.7")
-                Log.e("LOCATIONFORECAST_DATA: ", " \n\nDATA-SOURCE LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
-                        "\nCordinates: ${locationForecast.geometry.coordinates} " +
-                        "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
-                        "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
-                        "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
-                        "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n")
-
+                val locationForecast = dataSource.fetchLocationForecast_LatAndLon("59.9", "10.7")
+                Log.e(
+                    "LOCATIONFORECAST_DATA: ",
+                    " \n\nDATA-SOURCE LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
+                            "\nCordinates: ${locationForecast.geometry.coordinates} " +
+                            "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
+                            "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
+                            "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
+                            "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n"
+                )
 
 
             } catch (e: Exception) {
@@ -49,12 +51,15 @@ fun TestLocationRepository() {
             try {
                 val locationForecast = repository.getLocationForecast("59.9", "10.7")
                 if (locationForecast != null) {
-                    Log.e("REPOSITORY-LOCATIONFORECAST: ", " \n\nREPOSOTORY LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
-                            "\nCordinates: ${locationForecast.geometry.coordinates} " +
-                            "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
-                            "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
-                            "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
-                            "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n")
+                    Log.e(
+                        "REPOSITORY-LOCATIONFORECAST: ",
+                        " \n\nREPOSOTORY LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
+                                "\nCordinates: ${locationForecast.geometry.coordinates} " +
+                                "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
+                                "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
+                                "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
+                                "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n"
+                    )
                 }
 
 
@@ -64,7 +69,6 @@ fun TestLocationRepository() {
         }
     }
 }
-
 
 
 @Composable
@@ -78,7 +82,7 @@ fun TestLocationForecastViewModel() {
     }
     try {
         while (true) {
-        state.value?.let { locationForecast ->
+            state.value?.let { locationForecast ->
                 Log.e(
                     "ViewModel-LOCATIONFORECAST: ",
                     " \n\nVIEW-MODEL LOCATIONFORECAST: CURRENT WHEATER DATA\n " +

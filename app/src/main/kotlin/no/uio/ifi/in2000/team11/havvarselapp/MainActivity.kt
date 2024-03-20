@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import no.uio.ifi.in2000.team11.havvarselapp.test.TestGribfilesDataSource
 import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationForecastDataSource
-import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationForecastViewModel
+//import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationForecastViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationRepository
 import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
 
@@ -32,8 +32,8 @@ class MainActivity : ComponentActivity() {
             }
             //TestGribfilesDataSource()
             TestLocationForecastDataSource()
-            TestLocationRepository()
-            TestLocationForecastViewModel()
+           // TestLocationRepository()
+           // TestLocationForecastViewModel()
         }
     }
 }

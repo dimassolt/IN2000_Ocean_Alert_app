@@ -4,7 +4,7 @@ package no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast
 /**
  *
  *      Si at objektet heter: 'val forecast'
- *
+ * //
  *                                      For å hente NÅVÆRENDE vær-data:
  *
  *      Temperatur:             forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_temperature
@@ -26,23 +26,9 @@ package no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast
  *       air_pressure_at_sea_level:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_pressure_at_sea_level
  *       air_pressure_at_sea_level unit:          forecast?.properties?.meta?.units?.air_pressure_at_sea_level
  *
- *       air_temperature_max:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_temperature_max
- *       air_temperature_max unit:          forecast?.properties?.meta?.units?.air_temperature_max
- *
- *       air_temperature_min:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_temperature_min
- *       air_temperature_min unit:          forecast?.properties?.meta?.units?.air_temperature_min
  *
  *       Tåkeområdet               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.fog_area_fraction
  *       Tåkeområdet unit:          forecast?.properties?.meta?.units?.fog_area_fraction
- *
- *       Tåkeområdet høy:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_high
- *       Tåkeområdet høy unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_high
- *
- *       Tåkeområdet medium:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_medium
- *       Tåkeområdet medium unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_medium
- *
- *       Tåkeområdet lav:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_low
- *       Tåkeområdet lav unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_low
  *
  *       dew_point_temperature:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.dew_point_temperature
  *       dew_point_temperature unit:          forecast?.properties?.meta?.units?.dew_point_temperature
@@ -50,38 +36,30 @@ package no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast
  *       relative_humidity:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.relative_humidity
  *       relative_humidity unit:          forecast?.properties?.meta?.units?.relative_humidity
  *
- *       wind_speed_of_gust:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_speed_of_gust
- *       wind_speed_of_gust unit:          forecast?.properties?.meta?.units?.wind_speed_of_gust
+ *       cloud_area_fraction:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction
+ *       cloud_area_fraction unit:          forecast?.properties?.meta?.units?.cloud_area_fraction
  *
- *       wind_speed_percentile_10:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_speed_percentile_10
- *       wind_speed_percentile_10 unit:          forecast?.properties?.meta?.units?.wind_speed_percentile_10
+ *       cloud_area_fraction_high:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_high
+ *       cloud_area_fraction_high unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_high
  *
- *       wind_speed_percentile_90:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_speed_percentile_90
- *       wind_speed_percentile_90 unit:          forecast?.properties?.meta?.units?.wind_speed_percentile_90
+ *       cloud_area_fraction_medium:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_medium
+ *       cloud_area_fraction_medium unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_medium
+ *
+ *       cloud_area_fraction_low:               forecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.cloud_area_fraction_low
+ *       cloud_area_fraction_low unit:          forecast?.properties?.meta?.units?.cloud_area_fraction_low
+ *
+ *
  *
  *
  *
  *                                      Hent vær-data 1 time frem i tid: (dette er ALLE data man kan hente om 1 time frem i tid)
  *
  *
- *      Sannsynlighet for nedbør:          forecast?.properties?.timeseries?.firstOrNull()?.data?.next_1_hours?.details?.probability_of_precipitation
- *      Sannsynlighet for nedbør unit:     forecast?.properties?.meta?.units?.probability_of_precipitation
- *
- *
- *      Sannsynlighet for torden:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_1_hours?.details?.probability_of_thunder
- *      Sannsynlighet for torden unit:         forecast?.properties?.meta?.units?.probability_of_thunder
- *
- *
  *      Nedbørs mengde:                  forecast?.properties?.timeseries?.firstOrNull()?.data?.next_1_hours?.details?.precipitation_amount
  *      Nedbørs mengde unit:             forecast?.properties?.meta?.units?.precipitation_amount
  *
  *
- *      Nedbørs mengde max:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_1_hours?.details?.precipitation_amount_max
- *      Nedbørs mengde max unit:         forecast?.properties?.meta?.units?.precipitation_amount_max
- *
- *
- *      Nedbørs mengde min:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_1_hours?.details?.precipitation_amount_min
- *      Nedbørs mengde min unit:         forecast?.properties?.meta?.units?.precipitation_amount_min
+
  *
  *
  *
@@ -97,20 +75,9 @@ package no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast
  *      Min temperatur unit:                    forecast?.properties?.meta?.units?.air_temperature_min
  *
  *
- *      Sannsynlighet for torden:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_6_hours?.details?.probability_of_thunder
- *      Sannsynlighet for torden unit:         forecast?.properties?.meta?.units?.probability_of_thunder
- *
- *
  *      Nedbørs mengde:                  forecast?.properties?.timeseries?.firstOrNull()?.data?.next_6_hours?.details?.precipitation_amount
  *      Nedbørs mengde unit:             forecast?.properties?.meta?.units?.precipitation_amount
  *
- *
- *      Nedbørs mengde max:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_6_hours?.details?.precipitation_amount_max
- *      Nedbørs mengde max unit:         forecast?.properties?.meta?.units?.precipitation_amount_max
- *
- *
- *      Nedbørs mengde min:              forecast?.properties?.timeseries?.firstOrNull()?.data?.next_6_hours?.details?.precipitation_amount_min
- *      Nedbørs mengde min unit:         forecast?.properties?.meta?.units?.precipitation_amount_min
  *
  *
  *
@@ -121,7 +88,7 @@ package no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast
  *        Sannsynlighet for nedbør unit:     forecast?.properties?.meta?.units?.probability_of_precipitation
  *
  */
-data class LocationForecast(
+data class LocationForecast( // Compact
     val type: String,
     val geometry: Geometry,
     val properties: Properties,
@@ -155,28 +122,12 @@ data class Meta(
 data class Units (
     val air_pressure_at_sea_level : String?,
     val air_temperature : String?,
-    val air_temperature_max : String?,
-    val air_temperature_min : String?,
-    val air_temperature_percentile_10 : String?,
-    val air_temperature_percentile_90 : String?,
     val cloud_area_fraction : String?,
-    val cloud_area_fraction_high : String?,
-    val cloud_area_fraction_low : String?,
-    val cloud_area_fraction_medium : String?,
-    val dew_point_temperature : String?,
-    val fog_area_fraction : String?,
     val precipitation_amount : String?,
-    val precipitation_amount_max : String?,
-    val precipitation_amount_min : String?,
-    val probability_of_precipitation : String?,
-    val probability_of_thunder : String?,
     val relative_humidity : String?,
-    val ultraviolet_index_clear_sky : String?,
     val wind_from_direction : String?,
     val wind_speed : String?,
-    val wind_speed_of_gust : String?,
-    val wind_speed_percentile_10 : String?,
-    val wind_speed_percentile_90 : String?
+
 )
 
 // TODO: Ny
@@ -192,10 +143,10 @@ data class Timeseries(
 
 // TODO: Ny
 data class Data (
-    val instant : Instant,
-    val next_12_hours : Next_12_hours,
-    val next_1_hours : Next_1_hours,
-    val next_6_hours : Next_6_hours
+    val instant: Instant,
+    val next_12_hours: Next_12_hours,
+    val next_1_hours: Next_1_hours,
+    val next_6_hours: Next_6_hours
 )
 
 // TODO: Ny
@@ -203,40 +154,27 @@ data class Instant(
     val details: InstantDetails,
 )
 
-// air_temperature_percentile_10   air_temperature_percentile_90   cloud_area_fraction  cloud_area_fraction_high  cloud_area_fraction_low  cloud_area_fraction_medium
 
 data class InstantDetails (
     val air_pressure_at_sea_level : Double?,
     val air_temperature : Double?,
-    val air_temperature_percentile_10 : Double?,
-    val air_temperature_percentile_90 : Double?,
     val cloud_area_fraction : Double?,
-    val cloud_area_fraction_high : Double?,
-    val cloud_area_fraction_low : Double?,
-    val cloud_area_fraction_medium : Double?,
-    val dew_point_temperature : Double?,
-    val fog_area_fraction : Double?,
     val relative_humidity : Double?,
-    val ultraviolet_index_clear_sky : Double?,
     val wind_from_direction : Double?,
     val wind_speed : Double?,
-    val wind_speed_of_gust : Double?,
-    val wind_speed_percentile_10 : Double?,
-    val wind_speed_percentile_90 : Double?
-
 )
 
 
 // TODO: Ny
 data class Next_12_hours(
     val summary: Summary12,
-    val details: Details12,
+    val details: Details12?,
 )
 
 // TODO: Ny
 data class Summary12(
     val symbol_code: String,
-    val symbol_confidence: String
+    //val symbol_confidence: String
 )
 
 
@@ -244,7 +182,7 @@ data class Summary12(
 
 // TODO: Ny
 data class Details12 (
-    val probability_of_precipitation : Double
+    val probability_of_precipitation : Double?
 )
 
 
@@ -262,10 +200,10 @@ data class Summary1(
 
 data class Details1 (
     val precipitation_amount : Double,
-    val precipitation_amount_max : Double,
-    val precipitation_amount_min : Double,
-    val probability_of_precipitation : Double,
-    val probability_of_thunder: Double
+   // val precipitation_amount_max : Double,
+    //val precipitation_amount_min : Double,
+  //  val probability_of_precipitation : Double,
+    //val probability_of_thunder: Double
 )
 
 
@@ -281,12 +219,12 @@ data class Summary6(
 )
 
 data class Details6 (
-    val air_temperature_max : Double,
-    val air_temperature_min : Double,
-    val precipitation_amount : Double,
-    val precipitation_amount_max : Double,
-    val precipitation_amount_min : Double,
-    val probability_of_precipitation : Double
+    //val air_temperature_max : Double,
+   // val air_temperature_min : Double,
+    val precipitation_amount : Double?,
+   // val precipitation_amount_max : Double,
+   // val precipitation_amount_min : Double,
+   // val probability_of_precipitation : Double
 )
 
 

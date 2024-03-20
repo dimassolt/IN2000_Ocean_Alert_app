@@ -20,13 +20,27 @@ fun TestLocationForecastDataSource() {
         coroutineScope.launch {
             try {
                 val locationForecast = dataSource.fetchLocationForecast_LatAndLon( "59.9", "10.7")
-                Log.e("LOCATIONFORECAST_DATA: ", " \n\nDATA-SOURCE LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
+                Log.e("LOCATIONFORECAST_DATA NOW: ", " \n\nDATA-SOURCE LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
                         "\nCordinates: ${locationForecast.geometry.coordinates} " +
                         "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
-                        "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
                         "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
-                        "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n")
+                        "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n" +
+                        "\nAir pressure at sea level : ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_pressure_at_sea_level} ${locationForecast.properties.meta.units.air_pressure_at_sea_level}" +
+                        "\ncloud area fraction : ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.cloud_area_fraction} ${locationForecast.properties.meta.units.cloud_area_fraction}" +
+                        "\nRelative_humidity: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.relative_humidity} ${locationForecast.properties.meta.units.relative_humidity}\n\n")
 
+                Log.e("LOCATIONFORECAST_DATA 1 hour: ", " \n\nDATA-SOURCE LOCATIONFORECAST:  WHEATER DAT IN 1 HOURA\n " +
+                        "\nCordinates: ${locationForecast.geometry.coordinates} " +
+                        "\nNedbørs mengde: ${locationForecast.properties.timeseries.firstOrNull()?.data?.next_1_hours?.details?.precipitation_amount} ${locationForecast.properties.meta.units.precipitation_amount}\n\n")
+
+                Log.e("LOCATIONFORECAST_DATA 6 hour: ", " \n\nDATA-SOURCE LOCATIONFORECAST:  WHEATER DAT IN 6 HOURA\n " +
+                        "\nCordinates: ${locationForecast.geometry.coordinates} " +
+                        "\nNedbørs mengde: ${locationForecast.properties.timeseries.firstOrNull()?.data?.next_6_hours?.details?.precipitation_amount} ${locationForecast.properties.meta.units.precipitation_amount}\n\n")
+
+
+                Log.e("LOCATIONFORECAST_DATA 12 hour: ", " \n\nDATA-SOURCE LOCATIONFORECAST:  WHEATER DAT IN 12 HOURA\n " +
+                        "\nCordinates: ${locationForecast.geometry.coordinates} " +
+                        "\nSannsynlighet for nedbør: ${locationForecast.properties.timeseries.firstOrNull()?.data?.next_12_hours?.details?.probability_of_precipitation} % \n\n")
 
 
             } catch (e: Exception) {
@@ -52,7 +66,6 @@ fun TestLocationRepository() {
                     Log.e("REPOSITORY-LOCATIONFORECAST: ", " \n\nREPOSOTORY LOCATIONFORECAST: CURRENT WHEATER DATA\n " +
                             "\nCordinates: ${locationForecast.geometry.coordinates} " +
                             "\nTemperature: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.air_temperature} ${locationForecast.properties.meta.units.air_temperature}" +
-                            "\nUV-Index: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky} ${locationForecast.properties.meta.units.ultraviolet_index_clear_sky}" +
                             "\nWind speed: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_speed} ${locationForecast.properties.meta.units.wind_speed}" +
                             "\nWind direction: ${locationForecast.properties.timeseries.firstOrNull()?.data?.instant?.details?.wind_from_direction} ${locationForecast.properties.meta.units.wind_from_direction}\n\n")
                 }
@@ -66,7 +79,7 @@ fun TestLocationRepository() {
 }
 
 
-
+/**
 @Composable
 fun TestLocationForecastViewModel() {
     val forecastViewModel = LocationForecastViewModel()
@@ -100,6 +113,6 @@ fun TestLocationForecastViewModel() {
 
 
 }
-
+*/
 
 

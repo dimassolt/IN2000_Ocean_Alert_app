@@ -69,7 +69,7 @@ class LocationForecastViewModel(
         return currentForecast?.properties?.meta?.units?.air_temperature
     }
 
-
+/**
     fun getUVIndexNow(): Double? { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky
@@ -78,6 +78,7 @@ class LocationForecastViewModel(
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.properties?.meta?.units?.ultraviolet_index_clear_sky
     }
+    */
 
 
     fun getWindSpeedNow(): Double? { // UV-indexen under klare himmelforhold
@@ -104,7 +105,7 @@ class LocationForecastViewModel(
         return " \n\nCURRENT WHEATER DATA\n " +
                 "\nCordinates: ${getCordinates()} " +
                 "\nTemperature: ${getTemperatureNow()} ${getTemperatureUnit()}" +
-                "\nUV-Index: ${getUVIndexNow()} ${getUVIndexUnit()}" +
+               // "\nUV-Index: ${getUVIndexNow()} ${getUVIndexUnit()}" +
                 "\nWind speed: ${getWindSpeedNow()} ${getWindSpeedUnit()}" +
                 "\nWind direction: ${getWindDirection()} ${getWindDirectionUnit()}\n\n"
     }

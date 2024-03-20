@@ -1,5 +1,7 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.weather
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import no.uio.ifi.in2000.team11.havvarselapp.R
 import no.uio.ifi.in2000.team11.havvarselapp.ui.LocationForecast.LocationForecastViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
@@ -56,13 +59,31 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)){
+                Text(text = "Klokken: ",
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    fontWeight = FontWeight.Bold
+                )
+                Text(text = "${forecastViewModel.getNorskTime(0)} ",
+
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    //textAlign = TextAlign.Right
+                )
+            }
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)){
                 Text(text = "Temperatur: ",
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp),
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = "${weatherInfo?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_temperature}  ${weatherInfo?.properties?.meta?.units?.air_temperature}",
+                Text(text = "${forecastViewModel.getTemperatureNow(0)}  ${forecastViewModel.getTemperatureUnit()}",
 
                     modifier = Modifier
                         .weight(1f)
@@ -80,7 +101,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                         .padding(end = 8.dp),
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = "${weatherInfo?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_speed}  ${weatherInfo?.properties?.meta?.units?.wind_speed}",
+                Text(text = "${forecastViewModel.getWindSpeedNow(0)}  ${forecastViewModel.getWindSpeedUnit()}",
 
                     modifier = Modifier
                         .weight(1f)
@@ -98,7 +119,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                         .padding(end = 8.dp),
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = "${weatherInfo?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_from_direction}  ${weatherInfo?.properties?.meta?.units?.wind_from_direction}",
+                Text(text = "${forecastViewModel.getWindDirection(0)}  ${forecastViewModel.getWindDirectionUnit()}",
 
                     modifier = Modifier
                         .weight(1f)

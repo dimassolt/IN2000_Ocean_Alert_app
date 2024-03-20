@@ -1,6 +1,8 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.LocationForecast
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,6 +16,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.team11.havvarselapp.data.locationForecast.LocatinForecastRepositoryImpl
 import no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast.LocationForecast
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 data class IsAPiCalled( // for å unngå for mange API kall
     var iscalled: Boolean = false
@@ -55,45 +60,59 @@ class LocationForecastViewModel(
         }
     }
 
+    /**
+     * Denne returnerer dato og tid typ: '20 March 2024 16:00' i NORSK TID
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun konvertDateAndTime(time: Int): String {
+        val currentForecast = _forecastInfo_UiState.value
+        val tid_String: String = "${currentForecast?.properties?.timeseries?.get(time)?.time}"
+        var parsedDate = ZonedDateTime.parse(tid_String)
+        val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")
+        return parsedDate.withZoneSameInstant(ZoneId.of("Europe/Oslo")).format(formatter)
+    }
+
+    /**
+     * Denne returnerer norsk tid - typ: '16:00'
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getNorskTime(time: Int): String {
+        val currentForecast = _forecastInfo_UiState.value
+        val tid_String: String = "${currentForecast?.properties?.timeseries?.get(time)?.time}"
+        var parsedDate = ZonedDateTime.parse(tid_String)
+        return parsedDate.withZoneSameInstant(ZoneId.of("Europe/Oslo")).hour.toString()
+    }
+
     fun getCordinates(): List<Double>? {
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.geometry?.coordinates
     }
 
-    fun getTemperatureNow(): Double? { // grader er i celsius
+    fun getTemperatureNow(time: Int): Double? { // grader er i celsius
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.air_temperature
+        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.air_temperature
     }
+
     fun getTemperatureUnit(): String? { // grader er i celsius
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.meta?.units?.air_temperature
+        return if (currentForecast?.properties?.meta?.units?.air_temperature == "celsius") "°C" else currentForecast?.properties?.meta?.units?.air_temperature
     }
 
-/**
-    fun getUVIndexNow(): Double? { // UV-indexen under klare himmelforhold
-        val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.ultraviolet_index_clear_sky
-    }
-    fun getUVIndexUnit(): String? { // grader er i celsius
-        val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.meta?.units?.ultraviolet_index_clear_sky
-    }
-    */
 
-
-    fun getWindSpeedNow(): Double? { // UV-indexen under klare himmelforhold
+    fun getWindSpeedNow(time: Int): Double? { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_speed
+        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_speed
     }
+
     fun getWindSpeedUnit(): String? { // grader er i celsius
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.properties?.meta?.units?.wind_speed
     }
 
 
-    fun getWindDirection(): Double? { // UV-indexen under klare himmelforhold
+    fun getWindDirection(time: Int): Double? { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.instant?.details?.wind_from_direction
+        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_from_direction
     }
 
     fun getWindDirectionUnit(): String? { // grader er i celsius
@@ -101,14 +120,12 @@ class LocationForecastViewModel(
         return currentForecast?.properties?.meta?.units?.wind_from_direction
     }
 
-    fun getCurrentWeatherData(): String? {
-        return " \n\nCURRENT WHEATER DATA\n " +
-                "\nCordinates: ${getCordinates()} " +
-                "\nTemperature: ${getTemperatureNow()} ${getTemperatureUnit()}" +
-               // "\nUV-Index: ${getUVIndexNow()} ${getUVIndexUnit()}" +
-                "\nWind speed: ${getWindSpeedNow()} ${getWindSpeedUnit()}" +
-                "\nWind direction: ${getWindDirection()} ${getWindDirectionUnit()}\n\n"
+    fun probability_of_precipitation_12hours(): Double? { // Sannsynlighet for nedbør om 12 timer
+        val currentForecast = _forecastInfo_UiState.value
+        return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.next_12_hours?.details?.probability_of_precipitation
     }
+
+
 
 
 }

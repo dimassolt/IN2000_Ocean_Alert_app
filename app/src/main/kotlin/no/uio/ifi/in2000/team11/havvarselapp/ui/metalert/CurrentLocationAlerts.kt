@@ -29,11 +29,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import no.uio.ifi.in2000.team11.havvarselapp.model.alert.MetAlert
 
 @Composable
-fun CurrentLocationAlert(
+fun CurrentLocationAlert(region: String,
     simpleViewModel: SimpleViewModel = viewModel()
 ) {
     // TODO will be used with current location, "oslo" for now
-    val currentLocation: String = ""
+    val currentLocation: String = region
 
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by simpleViewModel.appUiState.collectAsState()

@@ -1,8 +1,10 @@
 package no.uio.ifi.in2000.team11.havvarselapp
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,6 +20,7 @@ import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
 
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -31,8 +34,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
             //TestGribfilesDataSource()
-            TestLocationForecastDataSource()
-           // TestLocationRepository()
+           // TestLocationForecastDataSource()
+            TestLocationRepository()
            // TestLocationForecastViewModel()
         }
     }

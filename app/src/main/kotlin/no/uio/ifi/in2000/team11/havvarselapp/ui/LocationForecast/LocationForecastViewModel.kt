@@ -45,9 +45,10 @@ class LocationForecastViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 try {
                     isAPiCalled.iscalled = true
-                    val forecast = repository.getLocationForecast(lat, lon)
+                    val forecast = repository.getLocationForecastComplete(lat, lon)
                     _forecastInfo_UiState.update { forecast }
                     Log.e("VIEWMODEL", "API-kall")
+
 
                 } catch (e: Exception) {
                     Log.e(
@@ -67,7 +68,7 @@ class LocationForecastViewModel(
     fun konvertDateAndTime(time: Int): String {
         val currentForecast = _forecastInfo_UiState.value
         val tid_String: String = "${currentForecast?.properties?.timeseries?.get(time)?.time}"
-        var parsedDate = ZonedDateTime.parse(tid_String)
+        val parsedDate = ZonedDateTime.parse(tid_String)
         val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")
         return parsedDate.withZoneSameInstant(ZoneId.of("Europe/Oslo")).format(formatter)
     }
@@ -83,47 +84,62 @@ class LocationForecastViewModel(
         return parsedDate.withZoneSameInstant(ZoneId.of("Europe/Oslo")).hour.toString()
     }
 
+
+
     fun getCordinates(): List<Double>? {
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.geometry?.coordinates
     }
 
-    fun getTemperatureNow(time: Int): Double? { // grader er i celsius
+    fun getTemperature(time: Int): String { // grader er i celsius
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.air_temperature
-    }
-
-    fun getTemperatureUnit(): String? { // grader er i celsius
-        val currentForecast = _forecastInfo_UiState.value
-        return if (currentForecast?.properties?.meta?.units?.air_temperature == "celsius") "°C" else currentForecast?.properties?.meta?.units?.air_temperature
+        val unit: String? = if (currentForecast?.properties?.meta?.units?.air_temperature == "celsius") "°C" else currentForecast?.properties?.meta?.units?.air_temperature
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.air_temperature} $unit"
     }
 
 
-    fun getWindSpeedNow(time: Int): Double? { // UV-indexen under klare himmelforhold
-        val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_speed
-    }
 
-    fun getWindSpeedUnit(): String? { // grader er i celsius
+    fun getWindSpeed(time: Int): String { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.meta?.units?.wind_speed
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_speed} ${currentForecast?.properties?.meta?.units?.wind_speed}"
     }
 
 
-    fun getWindDirection(time: Int): Double? { // UV-indexen under klare himmelforhold
+    fun getWindDirection(time: Int): String { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_from_direction
+        val unit: String? = if (currentForecast?.properties?.meta?.units?.wind_from_direction == "degrees") "°" else currentForecast?.properties?.meta?.units?.wind_from_direction
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_from_direction}$unit"
     }
 
-    fun getWindDirectionUnit(): String? { // grader er i celsius
+
+    fun getUVindex(time: Int): Double? { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        return currentForecast?.properties?.meta?.units?.wind_from_direction
+        return currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.ultraviolet_index_clear_sky
     }
+    // fog_area_fraction
+
+    fun get_fog_area_fraction(time: Int): String { // UV-indexen under klare himmelforhold
+        val currentForecast = _forecastInfo_UiState.value
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.fog_area_fraction} ${currentForecast?.properties?.meta?.units?.fog_area_fraction}"
+    }
+
+    fun getRelativeHumidity(time: Int): String { // UV-indexen under klare himmelforhold
+        val currentForecast = _forecastInfo_UiState.value
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.relative_humidity} ${currentForecast?.properties?.meta?.units?.relative_humidity}"
+    }
+
+    fun get_foghh_area_fraction(time: Int): String { // UV-indexen under klare himmelforhold
+        val currentForecast = _forecastInfo_UiState.value
+        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.fog_area_fraction} ${currentForecast?.properties?.meta?.units?.fog_area_fraction}"
+    }
+
 
     fun probability_of_precipitation_12hours(): Double? { // Sannsynlighet for nedbør om 12 timer
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.properties?.timeseries?.firstOrNull()?.data?.next_12_hours?.details?.probability_of_precipitation
     }
+
+
 
 
 

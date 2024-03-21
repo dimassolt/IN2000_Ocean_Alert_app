@@ -25,12 +25,11 @@ class LocationForecastDataSource {
             gson()
         }
     }
-    suspend fun fetchLocationForecast_LatAndLon(lat: String, lon: String): LocationForecast {
-        val locationforecast: LocationForecast = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}").body()
-        return locationforecast
-    } // https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-16.516667&lon=-68.166667&altitude=4150
-   // https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.10&lon=9.58
 
+    suspend fun fetchLocationForecast_complete(lat: String, lon: String): LocationForecast {
+        val compleatelocationforecast: LocationForecast = client.get("https://gw-uio.intark.uh-it.no/in2000/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}").body()
+        return compleatelocationforecast
+    }
 
 }
 

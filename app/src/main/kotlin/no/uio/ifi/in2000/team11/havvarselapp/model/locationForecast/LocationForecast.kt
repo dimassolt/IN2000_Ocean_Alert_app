@@ -122,9 +122,17 @@ data class Meta(
 data class Units (
     val air_pressure_at_sea_level : String?,
     val air_temperature : String?,
+    val air_temperature_max : String?, // COMPLETE
+    val air_temperature_min : String?, // COMPLETE
     val cloud_area_fraction : String?,
+    val cloud_area_fraction_high : String?, // COMPLETE
+    val cloud_area_fraction_low : String?, // COMPLETE
+    val cloud_area_fraction_medium : String?, // COMPLETE
+    val dew_point_temperature : String?, // COMPLETE
+    val fog_area_fraction : String?, // COMPLETE
     val precipitation_amount : String?,
     val relative_humidity : String?,
+    val ultraviolet_index_clear_sky : String?, // COMPLETE
     val wind_from_direction : String?,
     val wind_speed : String?,
 
@@ -159,7 +167,13 @@ data class InstantDetails (
     val air_pressure_at_sea_level : Double?,
     val air_temperature : Double?,
     val cloud_area_fraction : Double?,
+    val cloud_area_fraction_high : Double?, // COMPLETE
+    val cloud_area_fraction_low : Double?, // COMPLETE
+    val cloud_area_fraction_medium : Double?, // COMPLETE
+    val dew_point_temperature : Double?, // COMPLETE
+    val fog_area_fraction : Double?, // COMPLETE
     val relative_humidity : Double?,
+    val ultraviolet_index_clear_sky : Double?, // COMPLETE
     val wind_from_direction : Double?,
     val wind_speed : Double?,
 )
@@ -173,8 +187,7 @@ data class Next_12_hours(
 
 // TODO: Ny
 data class Summary12(
-    val symbol_code: String,
-    //val symbol_confidence: String
+    val symbol_code: String?,
 )
 
 
@@ -200,10 +213,7 @@ data class Summary1(
 
 data class Details1 (
     val precipitation_amount : Double,
-   // val precipitation_amount_max : Double,
-    //val precipitation_amount_min : Double,
-  //  val probability_of_precipitation : Double,
-    //val probability_of_thunder: Double
+
 )
 
 
@@ -219,12 +229,10 @@ data class Summary6(
 )
 
 data class Details6 (
-    //val air_temperature_max : Double,
-   // val air_temperature_min : Double,
+    val air_temperature_max : Double?, // COMPLETE
+    val air_temperature_min : Double?, // COMPLETE
     val precipitation_amount : Double?,
-   // val precipitation_amount_max : Double,
-   // val precipitation_amount_min : Double,
-   // val probability_of_precipitation : Double
+
 )
 
 

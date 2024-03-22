@@ -48,6 +48,8 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
     val ikonUV  = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
 
 
+    // val ikonUV  = ImageVector.vectorResource(id = R.drawable.)
+
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -185,7 +187,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                         .padding(end = 8.dp),
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = forecastViewModel.getWindDirection(1),
+                Text(text = forecastViewModel.getWindDirection(0),
 
                     modifier = Modifier
                         .weight(1f)

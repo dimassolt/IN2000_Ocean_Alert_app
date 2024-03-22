@@ -128,9 +128,9 @@ class LocationForecastViewModel(
         return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.relative_humidity} ${currentForecast?.properties?.meta?.units?.relative_humidity}"
     }
 
-    fun get_foghh_area_fraction(time: Int): String { // UV-indexen under klare himmelforhold
+    fun getWeatherIcon(time: Int) : String? {
         val currentForecast = _forecastInfo_UiState.value
-        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.fog_area_fraction} ${currentForecast?.properties?.meta?.units?.fog_area_fraction}"
+        return currentForecast?.properties?.timeseries?.get(time)?.data?.next_1_hours?.summary?.symbol_code
     }
 
 

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.team11.havvarselapp.data.locationForecast.LocatinForecastRepositoryImpl
 import no.uio.ifi.in2000.team11.havvarselapp.model.locationForecast.LocationForecast
+import java.security.AccessController.getContext
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -132,6 +133,8 @@ class LocationForecastViewModel(
         val currentForecast = _forecastInfo_UiState.value
         return currentForecast?.properties?.timeseries?.get(time)?.data?.next_1_hours?.summary?.symbol_code
     }
+
+
 
 
     fun probability_of_precipitation_12hours(): Double? { // Sannsynlighet for nedbør om 12 timer

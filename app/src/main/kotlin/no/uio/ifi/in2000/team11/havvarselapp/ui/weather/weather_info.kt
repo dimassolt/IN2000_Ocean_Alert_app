@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -46,26 +47,43 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
     // ImageVector for værikonet som skal vises,
     // hentet fra drawable-ressursene
     forecastViewModel.loadForecast("59.9", "10.7")
-    val imageVector =
-        ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_01)
+    val imageVector = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_01)
 
-    val ikonTemp =
-        ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_175)
+
+    val ikonTemp = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_175)
     val ikonTemp2 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_165)
 
 
-    val ikonKlokke =
-        ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_172)
+    val ikonKlokke = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_172)
+    val klokke = ImageVector.vectorResource(id = R.drawable.clock)
+
     val ikonVind = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_156)
-    val ikonUV = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
+    val vind1 = ImageVector.vectorResource(id = R.drawable.vind1)
+    val vind2 = ImageVector.vectorResource(id = R.drawable.vind2)
+    val vind3 = ImageVector.vectorResource(id = R.drawable.vind3)
+    val vind4 = ImageVector.vectorResource(id = R.drawable.vind4)
+    val vind5 = ImageVector.vectorResource(id = R.drawable.vind5)
+    val vind6 = ImageVector.vectorResource(id = R.drawable.vind6)
+    val vind7 = ImageVector.vectorResource(id = R.drawable.vind7)
+    val vind9 = ImageVector.vectorResource(id = R.drawable.vind9)
+
+    val uv1 = ImageVector.vectorResource(id = R.drawable.uv1)
+    val uv2 = ImageVector.vectorResource(id = R.drawable.uv2)
+    val uv3 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
+
+    var radColor1: Color = Color(247, 228, 236)
+    var radColor2: Color = Color(230, 213, 217)
+    var radColor3: Color = Color(198, 156, 166, 255)
+
+    val værikon = ImageVector.vectorResource(id = R.drawable.weather1)
+
+
 
 
 
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     )
@@ -86,239 +104,181 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
                 .padding(20.dp)
         )
 
-        Card(modifier = Modifier.padding(6.dp))
+        Card(modifier = Modifier.padding(2.dp))
 
         {
 
-
-
             // IKON ØVERST
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.DarkGray)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 7.dp, bottom = 3.dp),
-                    horizontalArrangement = Arrangement.Center,
-                )
+                    .background(radColor3)
+                    .padding(top = 7.dp, bottom = 5.dp),
+                horizontalArrangement = Arrangement.Center, )
                 {
 
-                    // Klokke ikon
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    ) {
-                        Image(
-                            imageVector = ikonKlokke, contentDescription = "image",
-                            Modifier
-                                .size(45.dp)
-                                .padding(2.dp)
-                        )
-                    }
+                // Klokke ikon
+                Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+                    Image(
+                        imageVector = klokke, contentDescription = "image",
+                        Modifier.size(45.dp).padding(top = 5.dp) )
+                }
 
 
-                    // Temnperatur ikon
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    ) {
-                        Image(
-                            imageVector = ikonTemp2, contentDescription = "image",
-                            Modifier
-                                .size(50.dp)
-                                .padding(2.dp)
-                        )
-                    }
+                // Temnperatur ikon
+                Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+                    Image(
+                        imageVector = ikonTemp2, contentDescription = "image",
+                        Modifier.size(50.dp).padding(2.dp) )
+                }
+
+                // Temnperatur ikon
+                Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+                    Image(
+                        imageVector = værikon, contentDescription = "image",
+                        Modifier.size(55.dp))
+                }
 
 
-                    // Vind ikon
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    ) {
-                        Image(
-                            imageVector = ikonVind, contentDescription = "image",
-                            Modifier
-                                .size(55.dp)
-                                .padding(2.dp)
-                        )
-                    }
+                // Vind ikon
+                Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+                    Image(
+                        imageVector = vind1, contentDescription = "image",
+                        Modifier.size(50.dp).padding(2.dp) )
+                }
 
 
-                    // UV ikon
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Image(
-                            imageVector = ikonUV, contentDescription = "image",
-                            Modifier
-                                .size(50.dp)
-                                .padding(2.dp)
-                        )
-                    }
+                // UV ikon
+                Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+                    Image(
+                        imageVector = uv1, contentDescription = "image",
+                        Modifier.size(45.dp).padding(top = 5.dp) )
+                }
 
                 }
-            }
+
 
 
 
 
 
             // Rad 1
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    horizontalArrangement = Arrangement.Center,
-                )
-                {
-                    // tidspunkt
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = forecastViewModel.getNorskTime(0),
-                            modifier = Modifier
-                                .weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-                    }
+                    .height(50.dp)
+                    .background(radColor1),
+                horizontalArrangement = Arrangement.Center )
+            {
 
-                    // Temnperatur 
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
+                // tidspunkt
+                Column( modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    Text(
+                        text = forecastViewModel.getNorskTime(0),
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.SansSerif ) }
 
-                        Text(
-                            text = forecastViewModel.getTemperature(0),
-                            modifier = Modifier
-                                .weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-                    }
+                // Temnperatur
+                Column( modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    Text(
+                        text = forecastViewModel.getTemperature(1),
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily.SansSerif ) }
 
 
-                    val ikonName = forecastViewModel.getWeatherIcon(0) ?: "fair_day"
-                    val context = LocalContext.current
-                    val resId =
-                        context.resources.getIdentifier(ikonName, "drawable", context.packageName)
-                    val weatherIkon: ImageVector = if (resId != 0) {
-                        ImageVector.vectorResource(id = resId)
+                val ikonName = forecastViewModel.getWeatherIcon(0) ?: "fair_day"
+                val context = LocalContext.current
+                val resId =
+                    context.resources.getIdentifier(ikonName, "drawable", context.packageName)
+                val weatherIkon: ImageVector = if (resId != 0) {
+                    ImageVector.vectorResource(id = resId)
 
-                    } else {
-                        ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.fair_day)
-                    }
-
-                    // Ikon for været
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Image(
-                            imageVector = weatherIkon, contentDescription = "image",
-                            Modifier.size(40.dp)
-                        )
-
-                    }
-
-                    // BESKRIVELSE av været
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        forecastViewModel.getWeatherIcon(0)?.let {
-                            Text(
-                                text = it,
-                                modifier = Modifier.weight(1f),
-                                fontWeight = FontWeight.W600,
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily.SansSerif
-                            )
-                        }
-                    }
-                    // Vind-speed
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = forecastViewModel.getWindSpeed(0),
-                            modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            fontFamily = FontFamily.Serif
-                        )
-
-                    }
-
-                    // UV index
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = "${forecastViewModel.getUVindex(0)}",
-                            modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-
-                    }
-
-
+                } else {
+                    ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.fair_day)
                 }
-                /*
-                for (j in 1..6) {
-                    WeatherCard(forecastViewModel, j)
-                } */
+
+                // Ikon for været
+                Column( modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    Image(
+                        imageVector = weatherIkon, contentDescription = "image",
+                        Modifier.size(40.dp) ) }
 
 
+                /**
+                // BESKRIVELSE av været
+                Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    forecastViewModel.getWeatherIcon(0)?.let {
+                        Text(
+                            text = it,
+                            modifier = Modifier.weight(1f),
+                            fontWeight = FontWeight.W600,
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily.SansSerif ) } } */
+
+
+                // Vind-speed
+                Column( modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    Text(
+                        text = forecastViewModel.getWindSpeed(0),
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        fontFamily = FontFamily.Serif ) }
+
+                // UV index
+                Column( modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+                    Text(
+                        text = "${forecastViewModel.getUVindex(1)}",
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily.SansSerif) }
             }
-            /**
-            for (i in 0..6) {
-            WeatherCard(forecastViewModel, i)
-            } */
 
 
-        }
 
+
+
+
+            var farge: Boolean = false
+            for (i in 1..5) {
+                if (farge) {
+                    WeatherRow(forecastViewModel, i, radColor1)
+                    farge = false
+                }
+                else {
+                    WeatherRow(forecastViewModel, i, radColor2)
+                    farge = true
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+        } // rad
 
     }
+
 }
 
+/**
+ *   for (i in 0..6) {
+ *                 Box() {
+ *                 WeatherCard(forecastViewModel, 0)
+ *                 }
+ */
 
 
 
@@ -326,168 +286,92 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
     @SuppressLint("DiscouragedApi")
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun WeatherCard(forecastViewModel: LocationForecastViewModel, time: Int) {
+    fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: Color) {
 
-        val ikonName = forecastViewModel.getWeatherIcon(time) ?: "fair_day"
-        val context = LocalContext.current
-        val resId = context.resources.getIdentifier(ikonName, "drawable", context.packageName)
-        val image: ImageVector = if (resId != 0) {
-            ImageVector.vectorResource(id = resId)
+    val ikonName = forecastViewModel.getWeatherIcon(time) ?: "fair_day"
+    val context = LocalContext.current
+    val resId = context.resources.getIdentifier(ikonName, "drawable", context.packageName)
 
-        } else {
-            ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.fair_day)
-        }
+    val weatherIkon: ImageVector = if (resId != 0) {
+        ImageVector.vectorResource(id = resId)
+    } else {
+        ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.fair_day)
+    }
 
-        // Kort objektene
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-                .heightIn(min = 25.dp, max = 25.dp)
-                .border(BorderStroke(2.dp, color = Color.DarkGray)),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
-        )
-        {
+    // Rad x
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp)
+            .background(rowColor),
 
+        horizontalArrangement = Arrangement.Center )
+    {
+        // tidspunkt
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            Text(
+                text = forecastViewModel.getNorskTime(time),
+                modifier = Modifier.weight(1f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                fontFamily = FontFamily.SansSerif ) }
 
-            // Rad 1
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    horizontalArrangement = Arrangement.Center,
-                )
-                {
-                    // tidspunkt
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = forecastViewModel.getNorskTime(time),
-                            modifier = Modifier
-                                .weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-                    }
-
-                    // Temnperatur
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-
-                        Text(
-                            text = forecastViewModel.getTemperature(time),
-                            modifier = Modifier
-                                .weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-                    }
+        // Temnperatur
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            Text(
+                text = forecastViewModel.getTemperature(time),
+                modifier = Modifier.weight(1f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                fontFamily = FontFamily.SansSerif ) }
 
 
-                    val ikonName2 = forecastViewModel.getWeatherIcon(time) ?: "fair_day"
-                    val context2 = LocalContext.current
-                    val resId2 =
-                        context2.resources.getIdentifier(
-                            ikonName2,
-                            "drawable",
-                            context2.packageName
-                        )
-                    val weatherIkon2: ImageVector = if (resId2 != 0) {
-                        ImageVector.vectorResource(id = resId2)
-
-                    } else {
-                        ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.fair_day)
-                    }
-
-                    // Ikon for været
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Image(
-                            imageVector = weatherIkon2, contentDescription = "image",
-                            Modifier.size(40.dp)
-                        )
-
-                    }
-
-                    // BESKRIVELSE av været
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        forecastViewModel.getWeatherIcon(time)?.let {
-                            Text(
-                                text = it,
-                                modifier = Modifier.weight(1f),
-                                fontWeight = FontWeight.W600,
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily.SansSerif
-                            )
-                        }
-                    }
-                    // Vind-speed
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = forecastViewModel.getWindSpeed(time),
-                            modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            fontFamily = FontFamily.Serif
-                        )
-
-                    }
-
-                    // UV index
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                    )
-                    {
-                        Text(
-                            text = "${forecastViewModel.getUVindex(time)}",
-                            modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.SansSerif
-                        )
-
-                    }
 
 
-                }
 
 
-            }
+        // Ikon for været
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            Image(
+                imageVector = weatherIkon, contentDescription = "image",
+                Modifier.size(40.dp)) }
 
-        }
+
+
+        /**
+        // BESKRIVELSE av været
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            forecastViewModel.getWeatherIcon(time)?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight.W600,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily.SansSerif )} } */
+
+        // Vind-speed
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            Text(
+                text = forecastViewModel.getWindSpeed(time),
+                modifier = Modifier.weight(1f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Serif ) }
+
+        // UV index
+        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+            Text(
+                text = "${forecastViewModel.getUVindex(time)}",
+                modifier = Modifier.weight(1f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                fontFamily = FontFamily.SansSerif ) }
+
 
     }
+
+
+}
 
 
 

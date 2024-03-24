@@ -73,7 +73,7 @@ fun SeaMap() {
     ) { isGranted ->
         if (isGranted) {
             // Permission granted
-            Log.e("SEA_MAP", "Jippi! Vi har fått posisjostillatelse")
+            Log.e("SEA_MAP", "Jippi! Vi har fått posisjonstillatelse")
         } else {
             // Handle permission denial
             Log.e("SEA_MAP", "nei")

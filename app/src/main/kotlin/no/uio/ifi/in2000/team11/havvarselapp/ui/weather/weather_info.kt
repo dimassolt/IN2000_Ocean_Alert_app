@@ -47,10 +47,10 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
     // hentet fra drawable-ressursene
     forecastViewModel.loadForecast("59.9", "10.7")
     val imageVector =
-        ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.p1honsftvsnih1nss1kofsciqo4_page_01)
+        ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_01)
 
     val ikonTemp =
-        ImageVector.vectorResource(id = no.uio.ifi.in2000.team11.havvarselapp.R.drawable.p1honsftvsnih1nss1kofsciqo4_page_175)
+        ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_175)
     val ikonTemp2 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_165)
 
 
@@ -89,6 +89,8 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
         Card(modifier = Modifier.padding(6.dp))
 
         {
+
+
 
             // IKON ØVERST
             Box(
@@ -166,6 +168,9 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()) {
 
                 }
             }
+
+
+
 
 
             // Rad 1

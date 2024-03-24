@@ -17,6 +17,7 @@ import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationForecastDataSource
 //import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationForecastViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.test.TestLocationRepository
 import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
+import no.uio.ifi.in2000.team11.havvarselapp.ui.weather.WeatherScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,8 @@ class MainActivity : ComponentActivity() {
             }
             //TestGribfilesDataSource()
            // TestLocationForecastDataSource()
-            TestLocationRepository()
+            //WeatherScreen()
+           // TestLocationRepository()
            // TestLocationForecastViewModel()
         }
     }

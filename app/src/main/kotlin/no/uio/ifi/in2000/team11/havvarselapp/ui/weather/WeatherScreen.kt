@@ -49,12 +49,17 @@ enum class DisplayInfo {
     Weather, Sea
 }
 
+enum class Expanded {
+    Long, Short
+}
+
 @SuppressLint("DiscouragedApi")
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
     var displayInfo by remember { mutableStateOf(DisplayInfo.Sea) }
+    var expanded by remember { mutableStateOf(Expanded.Short) }
     LaunchedEffect(key1 = Unit) {
         forecastViewModel.loadForecast("59.9", "10.7")
     }
@@ -77,20 +82,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
     // IKON til knappene: vær-skjerm og hav-skjerm
     val buttonOcean = ImageVector.vectorResource(id = R.drawable.buttonocean)
     val buttonWeather = ImageVector.vectorResource(id = R.drawable.buttonweather)
-    val direction = ImageVector.vectorResource(id = R.drawable.direction)
-
-
-
-    // IKON  HAV-SKJERM
-    val vannTemp = ImageVector.vectorResource(id = R.drawable.watertemp2)
-    val vannTemp2 = ImageVector.vectorResource(id = R.drawable.watertemp)
-    val wave = ImageVector.vectorResource(id = R.drawable.wave)
-    val current = ImageVector.vectorResource(id = R.drawable.current2)
-    val currentSpeed = ImageVector.vectorResource(id = R.drawable.currentspeed)
     val imageVectorOcean = ImageVector.vectorResource(id = R.drawable.oceanikon)
-
-
-    val fairday = ImageVector.vectorResource(id = R.drawable.fair_day)
 
 
 
@@ -118,7 +110,9 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
     val fontBrukt = fonts[8] // fra 0 - 11
 
 
-    Column(modifier = Modifier.fillMaxWidth().padding(2.dp),
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(2.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween )
     {
@@ -173,16 +167,22 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
             }
                 // Knapper for å bytte mellom skjerm
             Row (
-                modifier = Modifier.weight(1f).padding(top = 80.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 80.dp),
                 horizontalArrangement = Arrangement.End )
             {
                 IconButton(
                     onClick = { displayInfo = DisplayInfo.Weather },
-                    modifier = Modifier.size(55.dp).padding(2.dp) ) {
+                    modifier = Modifier
+                        .size(55.dp)
+                        .padding(2.dp) ) {
                     Image( imageVector = buttonWeather, contentDescription = "Weather" ) }
                 IconButton(
                     onClick = { displayInfo = DisplayInfo.Sea },
-                    modifier = Modifier.size(55.dp).padding(2.dp)) {
+                    modifier = Modifier
+                        .size(55.dp)
+                        .padding(2.dp)) {
                     Image( imageVector = buttonOcean, contentDescription = "Sea" ) }
             }
 
@@ -198,42 +198,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
             when (displayInfo) {
                 DisplayInfo.Weather -> {
                     // RAD MED IKON ØVERST
-                    Row(
-                        modifier = Modifier.fillMaxWidth().background(headerColor).padding(top = 7.dp, bottom = 5.dp),
-                        horizontalArrangement = Arrangement.Center, )
-                    {
-
-                        // Klokke ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = klokke, contentDescription = "image",
-                                Modifier.size(45.dp).padding(top = 5.dp) ) }
-
-                        // Temnperatur ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = ikonTemp, contentDescription = "image",
-                                Modifier.size(50.dp).padding(2.dp) ) }
-
-                        // Vær ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = veerikon, contentDescription = "image",
-                                Modifier.size(55.dp)) }
-
-                        // Vind ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = vind1, contentDescription = "image",
-                                Modifier.size(50.dp).padding(2.dp) ) }
-
-                        // UV ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = uv, contentDescription = "image",
-                                Modifier.size(45.dp).padding(top = 5.dp) ) }
-                    }
-                    // RAD MED IKON FOR VÆR-SKJERM SLUTT
+                    WeatherHeader(headerColor = headerColor, font = fontBrukt )
 
                     // LASTER INN RADER MED VÆR-INFO
                     if (forecastViewModel.forecastInfo_UiState.collectAsState().value != null) {
@@ -250,46 +215,10 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                 }
                 // VÆR-SKJERM SLUTT
 
-
-
                                                                                     // OCEAN-SCREEN
                 DisplayInfo.Sea -> {
                     // RAD MED IKON ØVERST Oceanforecast
-                    Row(modifier = Modifier.fillMaxWidth().background(headerColor).padding(top = 7.dp, bottom = 5.dp),
-                        horizontalArrangement = Arrangement.Center, )
-                    {
-
-                        // Klokke ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = klokke, contentDescription = "image",
-                                Modifier.size(45.dp).padding(top = 5.dp) ) }
-
-                        // Vann Temnperatur ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = vannTemp, contentDescription = "image",
-                                Modifier.size(52.dp).padding(2.dp) ) }
-
-                        // Bølge høyde ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = wave, contentDescription = "image",
-                                Modifier.size(52.dp)) }
-
-                        // Current ikon
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = direction, contentDescription = "image",
-                                Modifier.size(50.dp).padding(2.dp) ) }
-
-                        // Pil mot
-                        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
-                            Image(
-                                imageVector = currentSpeed, contentDescription = "image",
-                                Modifier.size(52.dp).padding(top = 5.dp) ) }
-                    }
-                    // RAD MED IKON FOR HAV_SKJERM SLUTT
+                    OceanHeader(headerColor = headerColor, font = fontBrukt )
 
                     // LASTER INN RADENE MED HAV-INFO
                     if (forecastViewModel.OceanForecast_UiState.collectAsState().value != null) {
@@ -331,7 +260,6 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
     val ikonName = forecastViewModel.getWeatherIcon(time) ?: "fair_day"
     val context = LocalContext.current
     val resId = context.resources.getIdentifier(ikonName, "drawable", context.packageName)
-
     val weatherIkon: ImageVector = if (resId != 0) {
         ImageVector.vectorResource(id = resId)
     } else {
@@ -426,11 +354,17 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
 
     // Rad x
     Row(
-        modifier = Modifier.fillMaxWidth().height(55.dp).background(rowColor),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp)
+            .background(rowColor),
         horizontalArrangement = Arrangement.Center )
     {
         // tidspunkt
-        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+        Column(modifier = Modifier
+            .weight(1f)
+            .wrapContentSize()
+            .padding(top = 15.dp) ) {
             Text(
                 text = forecastViewModel.getNorwegianTimeAndMinOcean(time),
                 modifier = Modifier.weight(1f),
@@ -439,7 +373,10 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
                 fontFamily = font ) }
 
         // Vann Temnperatur
-        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+        Column(modifier = Modifier
+            .weight(1f)
+            .wrapContentSize()
+            .padding(top = 15.dp) ) {
             Text(
                 text = forecastViewModel.getSeaWaterTemperature(time),
                 modifier = Modifier.weight(1f),
@@ -448,7 +385,10 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
                 fontFamily = font ) }
 
         // Bølge høyde
-        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 15.dp) ) {
+        Column(modifier = Modifier
+            .weight(1f)
+            .wrapContentSize()
+            .padding(top = 15.dp) ) {
             Text(
                 text = forecastViewModel.getSeaWaveHeight(time),
                 modifier = Modifier.weight(1f),
@@ -458,19 +398,30 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
 
 
         // Current from
-        Column(modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column(modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Text(
                 text = forecastViewModel.getCurrentDirectionFrom(time),
-                modifier = Modifier.weight(0.75f).align(Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .weight(0.75f)
+                    .align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font )
             Image(
                 imageVector = pil, contentDescription = "image",
-                Modifier.size(12.dp).align(Alignment.CenterHorizontally).weight(0.5f).padding(top = 3.dp))
+                Modifier
+                    .size(12.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .weight(0.5f)
+                    .padding(top = 3.dp))
             Text(
                 text = forecastViewModel.getCurrentDirectionTowards(time) + "",
-                modifier = Modifier.weight(0.95f).padding(bottom = 0.5.dp).align(Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .weight(0.95f)
+                    .padding(bottom = 0.5.dp)
+                    .align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font )
@@ -478,7 +429,10 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
 
 
         // Current speed
-        Column(modifier = Modifier.weight(1f).wrapContentSize().padding(top = 18.dp) ) {
+        Column(modifier = Modifier
+            .weight(1f)
+            .wrapContentSize()
+            .padding(top = 18.dp) ) {
             Text(
                 text = forecastViewModel.getCurrentSpeed(time),
                 modifier = Modifier.weight(1f),
@@ -494,11 +448,67 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
 
 @Composable
 fun OceanHeader(headerColor: Color, font: FontFamily) {
+    // IKON  HAV-SKJERM
     val klokke = ImageVector.vectorResource(id = R.drawable.clock)
     val vannTemp = ImageVector.vectorResource(id = R.drawable.watertemp2)
     val wave = ImageVector.vectorResource(id = R.drawable.wave)
-    val current = ImageVector.vectorResource(id = R.drawable.direction)
+    val currentDirection = ImageVector.vectorResource(id = R.drawable.direction)
     val currentSpeed = ImageVector.vectorResource(id = R.drawable.currentspeed)
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .background(headerColor)
+        .padding(top = 7.dp, bottom = 5.dp),
+        horizontalArrangement = Arrangement.Center, )
+    {
+
+        // Klokke ikon
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
+            Image(
+                imageVector = klokke, contentDescription = "image",
+                Modifier
+                    .size(45.dp)
+                    .padding(top = 5.dp) ) }
+
+        // Vann Temnperatur ikon
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
+            Image(
+                imageVector = vannTemp, contentDescription = "image",
+                Modifier
+                    .size(52.dp)
+                    .padding(2.dp) ) }
+
+        // Bølge høyde ikon
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
+            Image(
+                imageVector = wave, contentDescription = "image",
+                Modifier.size(52.dp)) }
+
+        // Current ikon
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
+            Image(
+                imageVector = currentDirection, contentDescription = "image",
+                Modifier
+                    .size(50.dp)
+                    .padding(2.dp) ) }
+
+        // Pil mot
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
+            Image(
+                imageVector = currentSpeed, contentDescription = "image",
+                Modifier
+                    .size(52.dp)
+                    .padding(top = 5.dp) ) }
+    }
 }
 
 
@@ -506,7 +516,6 @@ fun OceanHeader(headerColor: Color, font: FontFamily) {
 
 @Composable
 fun WeatherHeader(headerColor: Color, font: FontFamily) {
-    // IKON  HAV-SKJERM
     // IKON VÆR_SKJERM
     val ikonTemp = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_165)
     val klokke = ImageVector.vectorResource(id = R.drawable.clock)
@@ -518,39 +527,60 @@ fun WeatherHeader(headerColor: Color, font: FontFamily) {
     val uv = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(headerColor).padding(top = 7.dp, bottom = 5.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(headerColor)
+            .padding(top = 7.dp, bottom = 5.dp),
         horizontalArrangement = Arrangement.Center, )
     {
 
         // Klokke ikon
-        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Image(
                 imageVector = klokke, contentDescription = "image",
-                Modifier.size(45.dp).padding(top = 5.dp) ) }
+                Modifier
+                    .size(45.dp)
+                    .padding(top = 5.dp) ) }
 
         // Temnperatur ikon
-        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Image(
                 imageVector = ikonTemp, contentDescription = "image",
-                Modifier.size(50.dp).padding(2.dp) ) }
+                Modifier
+                    .size(50.dp)
+                    .padding(2.dp) ) }
 
         // Vær ikon
-        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Image(
                 imageVector = veerikon, contentDescription = "image",
                 Modifier.size(55.dp)) }
 
         // Vind ikon
-        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Image(
                 imageVector = vind1, contentDescription = "image",
-                Modifier.size(50.dp).padding(2.dp) ) }
+                Modifier
+                    .size(50.dp)
+                    .padding(2.dp) ) }
 
         // UV ikon
-        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+        Column( modifier = Modifier
+            .weight(1f)
+            .wrapContentSize() ) {
             Image(
                 imageVector = uv, contentDescription = "image",
-                Modifier.size(45.dp).padding(top = 5.dp) ) }
+                Modifier
+                    .size(45.dp)
+                    .padding(top = 5.dp) ) }
     }
 }
 

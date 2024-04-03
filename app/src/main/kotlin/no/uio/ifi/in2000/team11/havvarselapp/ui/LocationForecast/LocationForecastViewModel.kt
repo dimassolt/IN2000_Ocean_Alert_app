@@ -124,8 +124,8 @@ class LocationForecastViewModel(
 
     fun getWindDirection(time: Int): String { // UV-indexen under klare himmelforhold
         val currentForecast = _forecastInfo_UiState.value
-        val unit: String? = if (currentForecast?.properties?.meta?.units?.wind_from_direction == "degrees") "°" else currentForecast?.properties?.meta?.units?.wind_from_direction
-        return "${currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_from_direction}$unit"
+        val direction = currentForecast?.properties?.timeseries?.get(time)?.data?.instant?.details?.wind_from_direction
+        return if (direction != null) "fra " + getNortEastVestSouthFromDegrees(direction) else " "
     }
 
 

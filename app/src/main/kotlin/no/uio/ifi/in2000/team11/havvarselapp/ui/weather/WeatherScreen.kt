@@ -68,22 +68,30 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
     val uv1 = ImageVector.vectorResource(id = R.drawable.uv1)
     // + disse brukes ikke atm
     val vind0 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_156)
-    val uv2 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
+    val uv2 = ImageVector.vectorResource(id = R.drawable.clock)
     val vind2 = ImageVector.vectorResource(id = R.drawable.vind2)
-    val hovedbildet = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_01)
+    val uv = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194
+    )
 
 
     // IKON til knappene: vær-skjerm og hav-skjerm
     val buttonOcean = ImageVector.vectorResource(id = R.drawable.buttonocean)
     val buttonWeather = ImageVector.vectorResource(id = R.drawable.buttonweather)
+    val direction = ImageVector.vectorResource(id = R.drawable.direction)
+
 
 
     // IKON  HAV-SKJERM
     val vannTemp = ImageVector.vectorResource(id = R.drawable.watertemp2)
+    val vannTemp2 = ImageVector.vectorResource(id = R.drawable.watertemp)
     val wave = ImageVector.vectorResource(id = R.drawable.wave)
     val current = ImageVector.vectorResource(id = R.drawable.current2)
-    val pilMot = ImageVector.vectorResource(id = R.drawable.pil)
+    val currentSpeed = ImageVector.vectorResource(id = R.drawable.currentspeed)
     val imageVectorOcean = ImageVector.vectorResource(id = R.drawable.oceanikon)
+
+
+    val fairday = ImageVector.vectorResource(id = R.drawable.fair_day)
+
 
 
     // FARGENE TIL TABELLEN
@@ -222,7 +230,7 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                         // UV ikon
                         Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
                             Image(
-                                imageVector = uv1, contentDescription = "image",
+                                imageVector = uv, contentDescription = "image",
                                 Modifier.size(45.dp).padding(top = 5.dp) ) }
                     }
                     // RAD MED IKON FOR VÆR-SKJERM SLUTT
@@ -272,14 +280,14 @@ fun WeatherScreen(forecastViewModel: LocationForecastViewModel = viewModel()){
                         // Current ikon
                         Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
                             Image(
-                                imageVector = current, contentDescription = "image",
+                                imageVector = direction, contentDescription = "image",
                                 Modifier.size(50.dp).padding(2.dp) ) }
 
                         // Pil mot
                         Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
                             Image(
-                                imageVector = pilMot, contentDescription = "image",
-                                Modifier.size(40.dp).padding(top = 15.dp) ) }
+                                imageVector = currentSpeed, contentDescription = "image",
+                                Modifier.size(52.dp).padding(top = 5.dp) ) }
                     }
                     // RAD MED IKON FOR HAV_SKJERM SLUTT
 
@@ -376,13 +384,21 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
         Column(modifier = Modifier
             .weight(1f)
             .wrapContentSize()
-            .padding(top = 15.dp) ) {
+            .padding(top = 5.dp) ) {
             Text(
                 text = forecastViewModel.getWindSpeed(time),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(0.5f),
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                fontFamily = font ) }
+                fontSize = 12.sp,
+                fontFamily = font )
+            Text(
+                text = forecastViewModel.getWindDirection(time),
+                modifier = Modifier.weight(0.7f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp,
+                fontFamily = font )
+
+        }
 
         // UV index
         Column(modifier = Modifier
@@ -445,7 +461,7 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
         Column(modifier = Modifier.weight(1f).wrapContentSize() ) {
             Text(
                 text = forecastViewModel.getCurrentDirectionFrom(time),
-                modifier = Modifier.weight(0.75f),
+                modifier = Modifier.weight(0.75f).align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font )
@@ -454,7 +470,7 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
                 Modifier.size(12.dp).align(Alignment.CenterHorizontally).weight(0.5f).padding(top = 3.dp))
             Text(
                 text = forecastViewModel.getCurrentDirectionTowards(time) + "",
-                modifier = Modifier.weight(0.95f).padding(bottom = 0.5.dp),
+                modifier = Modifier.weight(0.95f).padding(bottom = 0.5.dp).align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font )

@@ -492,3 +492,68 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
 
 
 
+@Composable
+fun OceanHeader(headerColor: Color, font: FontFamily) {
+    val klokke = ImageVector.vectorResource(id = R.drawable.clock)
+    val vannTemp = ImageVector.vectorResource(id = R.drawable.watertemp2)
+    val wave = ImageVector.vectorResource(id = R.drawable.wave)
+    val current = ImageVector.vectorResource(id = R.drawable.direction)
+    val currentSpeed = ImageVector.vectorResource(id = R.drawable.currentspeed)
+}
+
+
+
+
+@Composable
+fun WeatherHeader(headerColor: Color, font: FontFamily) {
+    // IKON  HAV-SKJERM
+    // IKON VÆR_SKJERM
+    val ikonTemp = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_165)
+    val klokke = ImageVector.vectorResource(id = R.drawable.clock)
+    val veerikon = ImageVector.vectorResource(id = R.drawable.weather1)
+    val vind1 = ImageVector.vectorResource(id = R.drawable.vind1)
+    // + disse brukes ikke atm
+    val vind0 = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_156)
+    val uv2 = ImageVector.vectorResource(id = R.drawable.clock)
+    val uv = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_194)
+
+    Row(
+        modifier = Modifier.fillMaxWidth().background(headerColor).padding(top = 7.dp, bottom = 5.dp),
+        horizontalArrangement = Arrangement.Center, )
+    {
+
+        // Klokke ikon
+        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+            Image(
+                imageVector = klokke, contentDescription = "image",
+                Modifier.size(45.dp).padding(top = 5.dp) ) }
+
+        // Temnperatur ikon
+        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+            Image(
+                imageVector = ikonTemp, contentDescription = "image",
+                Modifier.size(50.dp).padding(2.dp) ) }
+
+        // Vær ikon
+        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+            Image(
+                imageVector = veerikon, contentDescription = "image",
+                Modifier.size(55.dp)) }
+
+        // Vind ikon
+        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+            Image(
+                imageVector = vind1, contentDescription = "image",
+                Modifier.size(50.dp).padding(2.dp) ) }
+
+        // UV ikon
+        Column( modifier = Modifier.weight(1f).wrapContentSize() ) {
+            Image(
+                imageVector = uv, contentDescription = "image",
+                Modifier.size(45.dp).padding(top = 5.dp) ) }
+    }
+}
+
+
+
+

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -29,12 +30,15 @@ import com.google.maps.android.compose.TileOverlay
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import no.uio.ifi.in2000.team11.havvarselapp.R
-import no.uio.ifi.in2000.team11.havvarselapp.data.location.LocationRepository
+import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 import java.net.URL
 
 @Composable
 fun SeaMapScreen(
+    sharedUiState: SharedUiState,
+    navController: NavController,
     placesClient: PlacesClient,
+    updateLocation: () -> Unit,
     seaMapViewModel: SeaMapViewModel = viewModel()
 ) {
     val autocompleteTextFieldActivity : AutocompleteTextFieldActivity = AutocompleteTextFieldActivity()

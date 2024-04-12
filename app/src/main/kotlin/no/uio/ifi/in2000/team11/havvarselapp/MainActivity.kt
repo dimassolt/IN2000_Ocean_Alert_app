@@ -16,8 +16,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import no.uio.ifi.in2000.team11.havvarselapp.BuildConfig.MAPS_API_KEY
-import no.uio.ifi.in2000.team11.havvarselapp.data.location.LocationRepository
-import no.uio.ifi.in2000.team11.havvarselapp.data.location.LocationRepositoryImpl
 import no.uio.ifi.in2000.team11.havvarselapp.ui.navigation.NavScreen
 import no.uio.ifi.in2000.team11.havvarselapp.ui.theme.HavvarselAppTheme
 
@@ -25,9 +23,6 @@ class MainActivity : ComponentActivity() {
 
     // klient for å kunne hente posisjon
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    // repository for posisjons-data som alle skjermer trenger tilgang til
-    private val locationRepository: LocationRepository = LocationRepositoryImpl()
 
     private lateinit var placesClient: PlacesClient
 

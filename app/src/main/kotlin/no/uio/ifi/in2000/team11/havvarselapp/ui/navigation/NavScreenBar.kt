@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.libraries.places.api.net.PlacesClient
-import no.uio.ifi.in2000.team11.havvarselapp.data.location.LocationRepository
 import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapScreen
 import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.AppUiState
 import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.CurrentLocationAlert
@@ -42,6 +41,7 @@ import no.uio.ifi.in2000.team11.havvarselapp.ui.weather.WeatherScreen
  */
 data class BottomNavigationItem(
     val title: String,
+    val route: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val badgeCount: Int,
@@ -81,6 +81,7 @@ fun NavScreen(
         val items = listOf(
             BottomNavigationItem(
                 title = "Kart",
+                route = "seamap_screen",
                 selectedIcon = Icons.Filled.Place,
                 unselectedIcon = Icons.Outlined.Place,
                 badgeCount = 0
@@ -88,6 +89,7 @@ fun NavScreen(
 
             BottomNavigationItem(
                 title = "Vær",
+                route = "weather_screen",
                 selectedIcon = Icons.Filled.Menu,
                 unselectedIcon = Icons.Outlined.Menu,
                 badgeCount = amountOfAlerts
@@ -96,6 +98,7 @@ fun NavScreen(
 
             BottomNavigationItem(
                 title = "Profil",
+                route = "profile_screen",
                 selectedIcon = Icons.Filled.Face,
                 unselectedIcon = Icons.Outlined.Face,
                 badgeCount = 0
@@ -103,6 +106,7 @@ fun NavScreen(
 
             BottomNavigationItem(
                 title = "Farevarsel",
+                route = "metalerts_screen",
                 selectedIcon = Icons.Filled.Menu,
                 unselectedIcon = Icons.Outlined.Menu,
                 badgeCount = 0

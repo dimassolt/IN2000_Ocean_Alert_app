@@ -45,7 +45,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import no.uio.ifi.in2000.team11.havvarselapp.R
+import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 import no.uio.ifi.in2000.team11.havvarselapp.ui.locationForecast.LocationForecastViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.CurrentLocationAlert
@@ -65,8 +67,15 @@ enum class Expanded {
  */
 @SuppressLint("DiscouragedApi", "FlowOperatorInvokedInComposition")
 @Composable
-fun WeatherScreen( forecastViewModel: LocationForecastViewModel = viewModel(), seaMapViewModel: SeaMapViewModel = viewModel()){
-    val displayInfo = remember { mutableStateOf(DisplayInfo.Weather) } // endret fra by til = slik at funksjonene kan være utenfor hovedmetoden
+fun WeatherScreen(
+    sharedUiState: SharedUiState,
+    navController: NavController,
+    updateLocation: () -> Unit,
+    forecastViewModel: LocationForecastViewModel = viewModel(),
+    seaMapViewModel: SeaMapViewModel = viewModel() //TODO SLETT DENNE VIEWMODELEN!
+) {
+    val displayInfo =
+        remember { mutableStateOf(DisplayInfo.Weather) } // endret fra by til = slik at funksjonene kan være utenfor hovedmetoden
     val expanded = remember { mutableStateOf(Expanded.Short) }
     val context = LocalContext.current
 
@@ -97,7 +106,7 @@ fun WeatherScreen( forecastViewModel: LocationForecastViewModel = viewModel(), s
     val oceanRow2 = Color(190, 210, 254, 255)
     val oceanHeader = Color(105, 131, 187, 232)
 
-   // Ulike fonter, getFonts1-getFonts6. Laget funksjoner for mindre rot, bare å slette når vi vet hva vi skal bruke.
+    // Ulike fonter, getFonts1-getFonts6. Laget funksjoner for mindre rot, bare å slette når vi vet hva vi skal bruke.
     val fonts3 = getFonts3()
 
 
@@ -281,7 +290,6 @@ fun WeatherScreen( forecastViewModel: LocationForecastViewModel = viewModel(), s
 }
 
 
-
 /**
  * Metode for å laste inn alle radene med værinfo
  * NB: Funksjonen har "SuppressLint" annotering fordi ikonnavn
@@ -289,7 +297,12 @@ fun WeatherScreen( forecastViewModel: LocationForecastViewModel = viewModel(), s
  */
 @SuppressLint("DiscouragedApi")
 @Composable
-fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: Color, font: FontFamily) {
+fun WeatherRow(
+    forecastViewModel: LocationForecastViewModel,
+    time: Int,
+    rowColor: Color,
+    font: FontFamily
+) {
     val iconName = forecastViewModel.getWeatherIcon(time)
     val context = LocalContext.current
     val resId = context.resources.getIdentifier(iconName, "drawable", context.packageName)
@@ -297,19 +310,20 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
     val weatherIcon: ImageVector = if (resId != 0) {
         ImageVector.vectorResource(id = resId)
     } else {
-        ImageVector.vectorResource(id = R.drawable.fair_day) }
+        ImageVector.vectorResource(id = R.drawable.fair_day)
+    }
 
     val pos = Color(159, 8, 8, 255) // Farge til positiv temp som i YR
     val neg = Color(40, 75, 202, 255) // Farge til negativ temp
 
-    val north  = ImageVector.vectorResource(id = R.drawable.north)
-    val south  = ImageVector.vectorResource(id = R.drawable.south)
-    val west  = ImageVector.vectorResource(id = R.drawable.west)
-    val east  = ImageVector.vectorResource(id = R.drawable.oest)
-    val northWest  = ImageVector.vectorResource(id = R.drawable.northwest)
-    val northEast  = ImageVector.vectorResource(id = R.drawable.northeast)
-    val southWest  = ImageVector.vectorResource(id = R.drawable.southwest)
-    val southEast  = ImageVector.vectorResource(id = R.drawable.southeast)
+    val north = ImageVector.vectorResource(id = R.drawable.north)
+    val south = ImageVector.vectorResource(id = R.drawable.south)
+    val west = ImageVector.vectorResource(id = R.drawable.west)
+    val east = ImageVector.vectorResource(id = R.drawable.oest)
+    val northWest = ImageVector.vectorResource(id = R.drawable.northwest)
+    val northEast = ImageVector.vectorResource(id = R.drawable.northeast)
+    val southWest = ImageVector.vectorResource(id = R.drawable.southwest)
+    val southEast = ImageVector.vectorResource(id = R.drawable.southeast)
 
     val windIcon: ImageVector = when (forecastViewModel.getWindDirection(time)) {
         "N" -> north
@@ -319,7 +333,7 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
         "S" -> south
         "SV" -> southWest
         "V" -> west
-        "NV"-> northWest
+        "NV" -> northWest
         else -> north
     }
 
@@ -330,66 +344,83 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
             .height(45.dp)
             .background(rowColor),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically) {
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
         // tidspunkt
-        Column(modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getNorwegianTimeWeather(time),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 13.sp,
-                fontFamily = font )
+                fontFamily = font
+            )
         }
 
 
         // Ikon for været
-        Column(modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Image(
                 imageVector = weatherIcon, contentDescription = "image",
-                Modifier.size(33.dp))
+                Modifier.size(33.dp)
+            )
         }
 
         // Temnperatur
-        Column(modifier = Modifier
-            .weight(1f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getTemperature(time),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 13.sp,
                 fontFamily = font,
-                color = if (forecastViewModel.temperaturePositive(time)) pos else neg )
+                color = if (forecastViewModel.temperaturePositive(time)) pos else neg
+            )
         }
 
         // Rain / perciption amount
-        Column(modifier = Modifier
-            .weight(1.25f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1.25f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getPrecipitationAmountMaxMin(time),
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp,
                 fontFamily = font,
-                color = neg )
+                color = neg
+            )
         }
 
         // Vind-speed
-        Column(modifier = Modifier
-            .weight(1.2f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1.2f)
+                .wrapContentSize()
+        ) {
             Row {
                 Text(
                     text = forecastViewModel.getWindSpeed(time),
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
-                    fontFamily = font )
+                    fontFamily = font
+                )
                 Image(
                     imageVector = windIcon, contentDescription = "image",
-                    Modifier.size(15.dp))
+                    Modifier.size(15.dp)
+                )
             }
 
 
@@ -404,10 +435,15 @@ fun WeatherRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor
  * Laster inn rader med hav-info, en rad for hvert klokkeslett
  */
 @Composable
-fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: Color, font: FontFamily) {
+fun OceanRow(
+    forecastViewModel: LocationForecastViewModel,
+    time: Int,
+    rowColor: Color,
+    font: FontFamily
+) {
     val pos = Color(159, 8, 8, 255) // Farge til positiv temp som i YR
     val neg = Color(40, 75, 202, 255) // Farge til negativ temp
-    val arrow  = ImageVector.vectorResource(id = R.drawable.oest)
+    val arrow = ImageVector.vectorResource(id = R.drawable.oest)
     val currentFrom = forecastViewModel.getCurrentDirectionFrom(time)
     val currentTowards = forecastViewModel.getCurrentDirectionTowards(time)
 
@@ -419,77 +455,88 @@ fun OceanRow(forecastViewModel: LocationForecastViewModel, time: Int, rowColor: 
             .height(45.dp)
             .background(rowColor),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically)
+        verticalAlignment = Alignment.CenterVertically
+    )
     {
         // tidspunkt
-        Column(modifier = Modifier
-            .weight(0.7f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(0.7f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getNorwegianTimeOcean(time),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 13.sp,
-                fontFamily = font ) }
+                fontFamily = font
+            )
+        }
 
         // Vann Temnperatur
-        Column(modifier = Modifier
-            .weight(1f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getSeaWaterTemperature(time),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 13.sp,
                 fontFamily = font,
                 color = if (forecastViewModel.seaTemperaturePositive(time)) pos else neg
-                ) }
-
-
+            )
+        }
 
 
         // Current from
-        Column( modifier = Modifier
-            .weight(1f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Row {
                 Text(
                     text = "$currentFrom ",
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 11.sp,
-                    fontFamily = font )
+                    fontFamily = font
+                )
 
                 Image(
                     imageVector = arrow, contentDescription = "image",
                     Modifier
                         .size(15.dp)
-                        .align(Alignment.CenterVertically))
+                        .align(Alignment.CenterVertically)
+                )
                 Text(
                     text = " $currentTowards",
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 11.sp,
-                    fontFamily = font )
+                    fontFamily = font
+                )
                 /**
                 Image(
-                    imageVector = towardsIcon, contentDescription = "image",
-                    Modifier.size(15.dp)) */
+                imageVector = towardsIcon, contentDescription = "image",
+                Modifier.size(15.dp)) */
             }
         }
 
         // Current speed
-        Column( modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = forecastViewModel.getCurrentSpeed(time),
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp,
-                fontFamily = font ) }
+                fontFamily = font
+            )
+        }
     }
 
 }
-
-
-
-
 
 
 @Composable
@@ -506,53 +553,64 @@ fun OceanHeader(headerColor: Color, font: FontFamily) {
     {
 
         // Klokke ikon
-        Column(modifier = Modifier
-            .weight(0.7f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(0.7f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Tid ",
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
                 fontSize = 11.sp,
-                fontFamily = font )
+                fontFamily = font
+            )
         }
 
         // Bade temperatur
-        Column(modifier = Modifier
-            .weight(1f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Bade temp. °C",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font,
-                color = Color.White, )
+                color = Color.White,
+            )
         }
 
 
-
         // Strøm reting
-        Column( modifier = Modifier
-            .weight(1f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Strøm retning",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font,
-                color = Color.White,)
+                color = Color.White,
+            )
         }
 
         // Strøm hastighet
-        Column( modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Strøm m/s",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font,
-                color = Color.White,)
+                color = Color.White,
+            )
         }
     }
 
@@ -573,9 +631,11 @@ fun WeatherHeader(headerColor: Color, font: FontFamily) {
     {
 
         // Tidspunkt
-        Column(modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Tid ",
                 fontWeight = FontWeight.ExtraBold,
@@ -586,9 +646,11 @@ fun WeatherHeader(headerColor: Color, font: FontFamily) {
         }
 
         // Vær ikon
-        Column( modifier = Modifier
-            .weight(0.8f)
-            .wrapContentSize() ) {
+        Column(
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Vær",
                 fontWeight = FontWeight.ExtraBold,
@@ -599,47 +661,53 @@ fun WeatherHeader(headerColor: Color, font: FontFamily) {
         }
 
         // Temperatur
-        Column(modifier = Modifier
-            .weight(1f)
-            .wrapContentSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "Temp. °C",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 11.sp,
                 fontFamily = font,
                 color = Color.White,
-                )
+            )
         }
 
 
-            // Nedbørsmengde
-            Column(modifier = Modifier
+        // Nedbørsmengde
+        Column(
+            modifier = Modifier
                 .weight(1.25f)
-                .wrapContentSize()) {
-                Text(
-                    text = "Nedbør mm",
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 11.sp,
-                    fontFamily = font,
-                    color = Color.White,
-                    )
-            }
-
-            // Vind
-            Column(modifier = Modifier
-                .weight(1.2f)
-                .wrapContentSize() ) {
-                Text(
-                    text = "Vind(kast) m/s",
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 11.sp,
-                    fontFamily = font,
-                    color = Color.White,
-                    )
-            }
-
-
+                .wrapContentSize()
+        ) {
+            Text(
+                text = "Nedbør mm",
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 11.sp,
+                fontFamily = font,
+                color = Color.White,
+            )
         }
+
+        // Vind
+        Column(
+            modifier = Modifier
+                .weight(1.2f)
+                .wrapContentSize()
+        ) {
+            Text(
+                text = "Vind(kast) m/s",
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 11.sp,
+                fontFamily = font,
+                color = Color.White,
+            )
+        }
+
+
+    }
 }
 
 /**
@@ -657,11 +725,14 @@ fun GetWeatherIcon(forecastViewModel: LocationForecastViewModel) {
     val weatherIcon: ImageVector = if (resId != 0) {
         ImageVector.vectorResource(id = resId)
     } else {
-        ImageVector.vectorResource(id = R.drawable.fair_day) }
-    Image(imageVector = weatherIcon, contentDescription = "image",
+        ImageVector.vectorResource(id = R.drawable.fair_day)
+    }
+    Image(
+        imageVector = weatherIcon, contentDescription = "image",
         Modifier
             .size(110.dp)
-            .padding(top = 3.dp, bottom = 10.dp))
+            .padding(top = 3.dp, bottom = 10.dp)
+    )
 
 }
 
@@ -678,7 +749,8 @@ fun BottomNavBar(currentScreen: MutableState<DisplayInfo>, font: FontFamily) {
 
     Box(
         modifier = Modifier
-            .fillMaxWidth().padding(bottom = 7.dp)
+            .fillMaxWidth()
+            .padding(bottom = 7.dp)
     ) {
         Row(
             modifier = Modifier
@@ -695,12 +767,16 @@ fun BottomNavBar(currentScreen: MutableState<DisplayInfo>, font: FontFamily) {
             Button(
                 onClick = { currentScreen.value = DisplayInfo.Weather },
                 colors = ButtonDefaults.buttonColors(weatherColor),
-                modifier = Modifier.weight(1f).padding(4.dp).fillMaxSize(),
-                shape = RoundedCornerShape(10.dp) ) {
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp)
+                    .fillMaxSize(),
+                shape = RoundedCornerShape(10.dp)
+            ) {
                 Text(
                     text = "Vær",
                     modifier = Modifier.fillMaxHeight(),
-                    color =  if (currentScreen.value == DisplayInfo.Weather) Color.White else Color.Black,
+                    color = if (currentScreen.value == DisplayInfo.Weather) Color.White else Color.Black,
                     fontFamily = font,
                     textAlign = TextAlign.Center,
                     fontSize = 15.sp,
@@ -708,18 +784,19 @@ fun BottomNavBar(currentScreen: MutableState<DisplayInfo>, font: FontFamily) {
                     fontWeight = if (currentScreen.value == DisplayInfo.Weather) FontWeight.ExtraBold else FontWeight.Normal
 
 
-
                 )
             }
             Button(
                 onClick = { currentScreen.value = DisplayInfo.Sea },
                 colors = ButtonDefaults.buttonColors(oceanColor),
-                modifier = Modifier.weight(1f).padding(4.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp),
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Text(
                     text = "Hav",
-                    color =  if (currentScreen.value == DisplayInfo.Sea) Color.White else Color.Black,
+                    color = if (currentScreen.value == DisplayInfo.Sea) Color.White else Color.Black,
                     fontFamily = font,
                     textAlign = TextAlign.Center,
                     fontSize = 15.sp,
@@ -739,10 +816,11 @@ fun BottomNavBar(currentScreen: MutableState<DisplayInfo>, font: FontFamily) {
 fun ShortToLongButton(expanded: MutableState<Expanded>, color: Color, font: FontFamily) {
     val pilopp = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_145)
     val pilned = ImageVector.vectorResource(id = R.drawable.p1honsftvsnih1nss1kofsciqo4_page_146)
-    Row( modifier = Modifier
-        .fillMaxWidth()
-        .height(30.dp)
-        .background(color),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(30.dp)
+            .background(color),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -767,14 +845,17 @@ fun ShortToLongButton(expanded: MutableState<Expanded>, color: Color, font: Font
                         contentDescription = "pil",
                         Modifier
                             .size(25.dp)
-                            .padding(top = 0.dp) )
+                            .padding(top = 0.dp)
+                    )
                 }
             }
+
             Expanded.Long -> {
                 Button(
                     onClick = { expanded.value = Expanded.Short },
                     modifier = Modifier.fillMaxSize(),
-                    colors = ButtonDefaults.buttonColors(color))
+                    colors = ButtonDefaults.buttonColors(color)
+                )
                 {
                     Text(
                         text = "Time for time ",
@@ -787,7 +868,8 @@ fun ShortToLongButton(expanded: MutableState<Expanded>, color: Color, font: Font
                     Image(
                         imageVector = pilopp,
                         contentDescription = "pil",
-                        Modifier.size(25.dp) )
+                        Modifier.size(25.dp)
+                    )
                 }
 
             }
@@ -799,7 +881,12 @@ fun ShortToLongButton(expanded: MutableState<Expanded>, color: Color, font: Font
  * Funksjon for å laste øverste del av vær / hav siden før tabellen.
  */
 @Composable
-fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: MutableState<DisplayInfo>, fontNormal: FontFamily, fontBold: FontFamily) {
+fun ScreenTop(
+    forecastViewModel: LocationForecastViewModel,
+    displayInfo: MutableState<DisplayInfo>,
+    fontNormal: FontFamily,
+    fontBold: FontFamily
+) {
 
 
     Text(
@@ -813,38 +900,48 @@ fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: Mutable
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically )
+        verticalAlignment = Alignment.CenterVertically
+    )
     {
         if (forecastViewModel.forecastInfoUiState.collectAsState().value != null) {
 
             Column(modifier = Modifier.weight(1f)) {
-                Row( modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 26.dp, top = 5.dp) ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 26.dp, top = 5.dp)
+                ) {
                     Text(
-                        text = "I dag "+ forecastViewModel.getNorwegianTimeWeather(0) + "-" +forecastViewModel.getNorwegianTimeWeather(1),
+                        text = "I dag " + forecastViewModel.getNorwegianTimeWeather(0) + "-" + forecastViewModel.getNorwegianTimeWeather(
+                            1
+                        ),
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 14.sp,
-                        fontFamily = fontBold )
+                        fontFamily = fontBold
+                    )
 
                 }
 
                 Row(
                     Modifier
                         .align(Alignment.Start)
-                        .padding(start = 40.dp)  )
+                        .padding(start = 40.dp)
+                )
                 {
 
                     Text(
                         text = forecastViewModel.getTemperature(0),
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 25.sp,
-                        fontFamily = fontBold )
+                        fontFamily = fontBold
+                    )
 
                 }
-                Column( modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 15.dp, top = 15.dp) ) {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 15.dp, top = 15.dp)
+                ) {
                     when (displayInfo.value) {
                         DisplayInfo.Weather -> {
                             Text(
@@ -853,8 +950,10 @@ fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: Mutable
                                 lineHeight = 13.sp,
                                 fontSize = 9.sp,
                                 color = Color(115, 115, 115, 255),
-                                fontFamily = fontNormal )
+                                fontFamily = fontNormal
+                            )
                         }
+
                         DisplayInfo.Sea -> {
                             Text(
                                 text = "Last updated:\n" + forecastViewModel.oceanForecastLastUpdated(),
@@ -862,7 +961,8 @@ fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: Mutable
                                 fontSize = 9.sp,
                                 color = Color(115, 115, 115, 255),
                                 lineHeight = 13.sp,
-                                fontFamily = fontNormal )
+                                fontFamily = fontNormal
+                            )
                         }
                     }
 
@@ -870,14 +970,15 @@ fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: Mutable
 
             }
 
-            Column (
+            Column(
                 modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally )
+                horizontalAlignment = Alignment.CenterHorizontally
+            )
             {
                 GetWeatherIcon(forecastViewModel = forecastViewModel)
             }
 
-            Spacer( modifier = Modifier.weight(1f) )
+            Spacer(modifier = Modifier.weight(1f))
 
         }
 
@@ -886,55 +987,61 @@ fun ScreenTop(forecastViewModel: LocationForecastViewModel, displayInfo: Mutable
 }
 
 
-
 fun getFonts1(): Array<FontFamily> {
-    val barlow1 = FontFamily( Font(R.font.barlow_thin, FontWeight.W400))
-    val barlow2 = FontFamily( Font(R.font.barlow_extralight, FontWeight.W400))
-    val barlow3 = FontFamily( Font(R.font.barlow_light, FontWeight.W400))
-    val barlow4 = FontFamily( Font(R.font.barlow_regular, FontWeight.W400))
-    return  arrayOf(barlow1, barlow2, barlow3, barlow4 )
+    val barlow1 = FontFamily(Font(R.font.barlow_thin, FontWeight.W400))
+    val barlow2 = FontFamily(Font(R.font.barlow_extralight, FontWeight.W400))
+    val barlow3 = FontFamily(Font(R.font.barlow_light, FontWeight.W400))
+    val barlow4 = FontFamily(Font(R.font.barlow_regular, FontWeight.W400))
+    return arrayOf(barlow1, barlow2, barlow3, barlow4)
 }
 
 fun getFonts2(): Array<FontFamily> {
-    val barlowcondensed1 = FontFamily( Font(R.font.barlowcondensed_thin, FontWeight.W400))
-    val barlowcondensed2 = FontFamily( Font(R.font.barlowcondensed_extralight, FontWeight.W400))
-    val barlowcondensed3 = FontFamily( Font(R.font.barlowcondensed_light, FontWeight.W400))
-    val barlowcondensed4 = FontFamily( Font(R.font.barlowcondensed_regular, FontWeight.W400))
-    return  arrayOf(barlowcondensed1, barlowcondensed2, barlowcondensed3, barlowcondensed4 )
+    val barlowcondensed1 = FontFamily(Font(R.font.barlowcondensed_thin, FontWeight.W400))
+    val barlowcondensed2 = FontFamily(Font(R.font.barlowcondensed_extralight, FontWeight.W400))
+    val barlowcondensed3 = FontFamily(Font(R.font.barlowcondensed_light, FontWeight.W400))
+    val barlowcondensed4 = FontFamily(Font(R.font.barlowcondensed_regular, FontWeight.W400))
+    return arrayOf(barlowcondensed1, barlowcondensed2, barlowcondensed3, barlowcondensed4)
 }
 
 
 fun getFonts3(): Array<FontFamily> {
-    val roboto1 = FontFamily( Font(R.font.robotocondensed_thin, FontWeight.W400))
-    val roboto2 = FontFamily( Font(R.font.robotocondensed_extralight, FontWeight.W400))
-    val roboto3 = FontFamily( Font(R.font.robotocondensed_light, FontWeight.W400))
-    val roboto4 = FontFamily( Font(R.font.robotocondensed_regular, FontWeight.W400))
-    return  arrayOf(roboto1, roboto2, roboto3, roboto4)
+    val roboto1 = FontFamily(Font(R.font.robotocondensed_thin, FontWeight.W400))
+    val roboto2 = FontFamily(Font(R.font.robotocondensed_extralight, FontWeight.W400))
+    val roboto3 = FontFamily(Font(R.font.robotocondensed_light, FontWeight.W400))
+    val roboto4 = FontFamily(Font(R.font.robotocondensed_regular, FontWeight.W400))
+    return arrayOf(roboto1, roboto2, roboto3, roboto4)
 }
 
 fun getFonts4(): Array<FontFamily> {
-    val natoSansJP = FontFamily( Font(R.font.notosansjp_variablefont_wght, FontWeight.W400))
-    val natoSansJPExtralight = FontFamily( Font(R.font.notosansjp_extralight, FontWeight.W400))
-    val natoSansJPLight = FontFamily( Font(R.font.notosansjp_light, FontWeight.W400))
-    val natoSansJPRegular = FontFamily( Font(R.font.notosansjp_regular, FontWeight.W400))
-    val natoSansJPExtrabold = FontFamily( Font(R.font.notosansjp_extrabold, FontWeight.W400))
-    return arrayOf( natoSansJP, natoSansJPExtralight, natoSansJPLight, natoSansJPRegular,  natoSansJPExtrabold )
+    val natoSansJP = FontFamily(Font(R.font.notosansjp_variablefont_wght, FontWeight.W400))
+    val natoSansJPExtralight = FontFamily(Font(R.font.notosansjp_extralight, FontWeight.W400))
+    val natoSansJPLight = FontFamily(Font(R.font.notosansjp_light, FontWeight.W400))
+    val natoSansJPRegular = FontFamily(Font(R.font.notosansjp_regular, FontWeight.W400))
+    val natoSansJPExtrabold = FontFamily(Font(R.font.notosansjp_extrabold, FontWeight.W400))
+    return arrayOf(
+        natoSansJP,
+        natoSansJPExtralight,
+        natoSansJPLight,
+        natoSansJPRegular,
+        natoSansJPExtrabold
+    )
 }
 
 fun getFonts5(): Array<FontFamily> {
-    val poppinsExtralight = FontFamily( Font(R.font.poppins_extralight, FontWeight.W400))
-    val poppinsLight = FontFamily( Font(R.font.poppins_light, FontWeight.W400))
-    val poppinsRegular = FontFamily( Font(R.font.poppins_regular, FontWeight.W400))
-    return  arrayOf(poppinsExtralight, poppinsLight, poppinsRegular )
+    val poppinsExtralight = FontFamily(Font(R.font.poppins_extralight, FontWeight.W400))
+    val poppinsLight = FontFamily(Font(R.font.poppins_light, FontWeight.W400))
+    val poppinsRegular = FontFamily(Font(R.font.poppins_regular, FontWeight.W400))
+    return arrayOf(poppinsExtralight, poppinsLight, poppinsRegular)
 }
 
 fun getFonts6(): Array<FontFamily> {
-    val truculentaRegular = FontFamily( Font(R.font.truculenta_regular, FontWeight.W400))
-    val truculentaLight = FontFamily( Font(R.font.truculenta_semiexpanded_light, FontWeight.W400))
-    val truculentaMedium = FontFamily( Font(R.font.truculenta_semiexpanded_medium, FontWeight.W400))
-    val truculenta3 = FontFamily( Font(R.font.truculenta_semiexpanded_regular, FontWeight.W400))
-    val truculenta4 = FontFamily( Font(R.font.truculenta_60pt_semicondensed_regular, FontWeight.W400))
-    return  arrayOf(truculentaLight, truculenta4 ,truculentaRegular, truculenta3, truculentaMedium )
+    val truculentaRegular = FontFamily(Font(R.font.truculenta_regular, FontWeight.W400))
+    val truculentaLight = FontFamily(Font(R.font.truculenta_semiexpanded_light, FontWeight.W400))
+    val truculentaMedium = FontFamily(Font(R.font.truculenta_semiexpanded_medium, FontWeight.W400))
+    val truculenta3 = FontFamily(Font(R.font.truculenta_semiexpanded_regular, FontWeight.W400))
+    val truculenta4 =
+        FontFamily(Font(R.font.truculenta_60pt_semicondensed_regular, FontWeight.W400))
+    return arrayOf(truculentaLight, truculenta4, truculentaRegular, truculenta3, truculentaMedium)
 }
 
 

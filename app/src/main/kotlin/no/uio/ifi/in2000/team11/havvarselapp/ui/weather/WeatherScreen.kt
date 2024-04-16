@@ -51,6 +51,7 @@ import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 import no.uio.ifi.in2000.team11.havvarselapp.ui.locationForecast.LocationForecastViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.CurrentLocationAlert
+import no.uio.ifi.in2000.team11.havvarselapp.ui.navigation.NavigationBarWithButtons
 
 enum class DisplayInfo {
     Weather, Sea
@@ -287,6 +288,7 @@ fun WeatherScreen(
             }
         }
     }
+    NavigationBarWithButtons(navController = navController)
 }
 
 

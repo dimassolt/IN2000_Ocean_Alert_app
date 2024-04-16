@@ -14,7 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.google.android.libraries.places.api.net.PlacesClient
 import no.uio.ifi.in2000.team11.havvarselapp.SharedViewModel
-import no.uio.ifi.in2000.team11.havvarselapp.sharedViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapScreen
 import no.uio.ifi.in2000.team11.havvarselapp.ui.weather.WeatherScreen
 

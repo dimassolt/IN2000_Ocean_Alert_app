@@ -44,7 +44,7 @@ fun SetUpNavigation(
                     navController = navController,
                     placesClient,
                     updateLocation = {
-                        viewModel.updateLocation(state.currentLocation)
+                        viewModel.updateLocation(it)
                     }
                 )
             }
@@ -56,7 +56,7 @@ fun SetUpNavigation(
                     sharedUiState = state,
                     navController = navController,
                     updateLocation = {
-                        viewModel.updateLocation(state.currentLocation)
+                        viewModel.updateLocation(it)
                     }
                 )
             }

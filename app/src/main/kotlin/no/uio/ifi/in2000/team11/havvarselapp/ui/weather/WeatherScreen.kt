@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.LatLng
 import no.uio.ifi.in2000.team11.havvarselapp.R
 import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 import no.uio.ifi.in2000.team11.havvarselapp.ui.locationForecast.LocationForecastViewModel
@@ -69,7 +70,7 @@ enum class Expanded {
 fun WeatherScreen(
     sharedUiState: SharedUiState,
     navController: NavController,
-    updateLocation: () -> Unit,
+    updateLocation: (loc: LatLng) -> Unit,
     forecastViewModel: LocationForecastViewModel = viewModel()
 ) {
     val displayInfo =

@@ -23,7 +23,7 @@ fun SetUpNavigation(
 ) {
     val navController = rememberNavController()
 
-    //TODO: initialise a placesClient here
+    //TODO: initialise a placesClient here?
 
     NavHost(
         navController = navController,

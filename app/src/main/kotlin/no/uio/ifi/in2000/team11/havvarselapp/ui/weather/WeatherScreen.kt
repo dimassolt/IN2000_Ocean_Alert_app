@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,7 +48,6 @@ import androidx.navigation.NavController
 import no.uio.ifi.in2000.team11.havvarselapp.R
 import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 import no.uio.ifi.in2000.team11.havvarselapp.ui.locationForecast.LocationForecastViewModel
-import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapViewModel
 import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.CurrentLocationAlert
 import no.uio.ifi.in2000.team11.havvarselapp.ui.navigation.NavigationBarWithButtons
 
@@ -72,28 +70,24 @@ fun WeatherScreen(
     sharedUiState: SharedUiState,
     navController: NavController,
     updateLocation: () -> Unit,
-    forecastViewModel: LocationForecastViewModel = viewModel(),
-    seaMapViewModel: SeaMapViewModel = viewModel() //TODO SLETT DENNE VIEWMODELEN!
+    forecastViewModel: LocationForecastViewModel = viewModel()
 ) {
     val displayInfo =
         remember { mutableStateOf(DisplayInfo.Weather) } // endret fra by til = slik at funksjonene kan være utenfor hovedmetoden
     val expanded = remember { mutableStateOf(Expanded.Short) }
     val context = LocalContext.current
 
-    // Henter MapUiState fra SeaMapViewModel
-    val mapUiState by seaMapViewModel.mapUiState.collectAsState()
-
     // Bruker LaunchedEffect for å laste værdata når posisjonen endres via søk / pin
-    LaunchedEffect(mapUiState.currentLocation.hashCode()) {
+    LaunchedEffect(sharedUiState.currentLocation.hashCode()) {
         forecastViewModel.loadForecast(
-            mapUiState.currentLocation.latitude.toString(),
-            mapUiState.currentLocation.longitude.toString()
+            sharedUiState.currentLocation.latitude.toString(),
+            sharedUiState.currentLocation.longitude.toString()
         )
         // slik at Stedsnavn oppdateres når data endres
         forecastViewModel.setCurrentPlaceName(
             context,
-            mapUiState.currentLocation.latitude,
-            mapUiState.currentLocation.longitude
+            sharedUiState.currentLocation.latitude,
+            sharedUiState.currentLocation.longitude
         )
     }
 

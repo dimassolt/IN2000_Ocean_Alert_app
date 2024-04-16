@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.UrlTileProvider
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -39,10 +40,10 @@ fun SeaMapScreen(
     sharedUiState: SharedUiState,
     navController: NavController,
     placesClient: PlacesClient,
-    updateLocation: () -> Unit,
+    updateLocation: (loc: LatLng) -> Unit,
     seaMapViewModel: SeaMapViewModel = viewModel()
 ) {
-    val autocompleteTextFieldActivity : AutocompleteTextFieldActivity = AutocompleteTextFieldActivity()
+    val autocompleteTextFieldActivity = AutocompleteTextFieldActivity()
     // observerer UiState fra ViewModel
     val mapUiState: MapUiState by seaMapViewModel.mapUiState.collectAsState()
 
@@ -54,7 +55,7 @@ fun SeaMapScreen(
     // dette lagres lokalt, ikke i UiState for å unngå at skjermen blir
     // recomposed hvert sekund hvis man scroller rundt i kartet */
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(mapUiState.currentLocation, 12f)
+        position = CameraPosition.fromLatLngZoom(sharedUiState.currentLocation, 12f)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -64,7 +65,8 @@ fun SeaMapScreen(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             onMapClick = { clickedPosition ->
-                seaMapViewModel.placeOrRemoveMarker(clickedPosition)
+                updateLocation(clickedPosition)
+                seaMapViewModel.placeOrRemoveMarker()
             },
             properties = MapProperties(
                 // dette er utseende av kartet, som man finner i filen "mapstyle" i raw-mappen
@@ -84,13 +86,19 @@ fun SeaMapScreen(
             // pin som plasseres på kartet der brukeren trykker
             if (mapUiState.markerVisible) {
                 Marker(
-                    state = rememberMarkerState(position = mapUiState.currentLocation),
+                    state = rememberMarkerState(position = sharedUiState.currentLocation),
                     icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
                 )
             }
 
         }
-        autocompleteTextFieldActivity.AutocompleteTextField(seaMapViewModel, context, cameraPositionState, placesClient)
+        autocompleteTextFieldActivity.AutocompleteTextField(
+            seaMapViewModel,
+            context,
+            updateLocation,
+            cameraPositionState,
+            placesClient
+        )
 
         // Knapp for å aktivere/deaktivere TileOverlay
         Button(

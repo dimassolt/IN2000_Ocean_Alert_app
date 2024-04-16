@@ -1,23 +1,29 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.outlined.Face
-import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
 
+/**
+ * Dataklasse for å representere hvert element i navigasjonsmenyen
+ */
+data class BottomNavigationItem(
+    val title: String,
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
+)
+/*
 @Composable
 fun NavigationBar(
     navController: NavController,
@@ -26,31 +32,16 @@ fun NavigationBar(
     val items = listOf(
         BottomNavigationItem(
             title = "Kart",
+            route = "seamap_screen",
             selectedIcon = Icons.Filled.Place,
-            unselectedIcon = Icons.Outlined.Place,
-            badgeCount = 0
+            unselectedIcon = Icons.Outlined.Place
         ),
 
         BottomNavigationItem(
             title = "Vær",
+            route = "weather_screen",
             selectedIcon = Icons.Filled.Menu,
-            unselectedIcon = Icons.Outlined.Menu,
-            badgeCount = sharedUiState.amountOfAlerts
-        ),
-
-
-        BottomNavigationItem(
-            title = "Profil",
-            selectedIcon = Icons.Filled.Face,
-            unselectedIcon = Icons.Outlined.Face,
-            badgeCount = 0
-        ),
-
-        BottomNavigationItem(
-            title = "Farevarsel",
-            selectedIcon = Icons.Filled.Menu,
-            unselectedIcon = Icons.Outlined.Menu,
-            badgeCount = 0
+            unselectedIcon = Icons.Outlined.Menu
         )
     )
     androidx.compose.material3.NavigationBar(
@@ -95,6 +86,33 @@ fun NavigationBar(
                     disabledTextColor = Color(0xFF_13_23_2C)
                 )
             )
+        }
+    }
+}
+*/
+@Composable
+fun NavigationBarWithButtons(navController: NavController) {
+    Column (modifier = Modifier
+        .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(onClick = {
+                navController.navigate("seamap_screen")
+            }) {
+                Text("Kart")
+            }
+            Button(onClick = {
+                navController.navigate("weather_screen")
+            }) {
+                Text("Vær")
+            }
         }
     }
 }

@@ -1,51 +1,8 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.navigation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.outlined.Face
-import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.libraries.places.api.net.PlacesClient
-import no.uio.ifi.in2000.team11.havvarselapp.ui.map.SeaMapScreen
-import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.AppUiState
-import no.uio.ifi.in2000.team11.havvarselapp.ui.metalert.CurrentLocationAlert
-import no.uio.ifi.in2000.team11.havvarselapp.ui.profile.Profil
-import no.uio.ifi.in2000.team11.havvarselapp.ui.weather.WeatherScreen
-
-/**
- * Dataklasse for å representere hvert element i navigasjonsmenyen
- */
-data class BottomNavigationItem(
-    val title: String,
-    val route: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val badgeCount: Int,
-)
 
 /**
  * Denne skjermen har en navigasjonslinje nederst, og dynamisk innhold
@@ -57,7 +14,7 @@ fun NavScreen(
     placesClient: PlacesClient,
     navScreenViewModel: NavScreenViewModel = viewModel()
 ) {
-
+/*
     val currentLocation: String = region
     // Observe the UI state object from the ViewModel
     val appUiState: AppUiState by navScreenViewModel.appUiState.collectAsState()
@@ -178,4 +135,6 @@ fun NavScreen(
             }
         }
     }
+
+ */
 }

@@ -1,22 +1,9 @@
 package no.uio.ifi.in2000.team11.havvarselapp
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 
 @Composable
-fun SharedViewModelSample() {
+fun SharedViewModelSample() { /*
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -92,4 +79,5 @@ private fun TermsAndConditionsScreen(
     Button(onClick = onOnboardingFinished) {
         Text(text = "State: $sharedState")
     }
+    */
 }

@@ -31,6 +31,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import no.uio.ifi.in2000.team11.havvarselapp.R
 import no.uio.ifi.in2000.team11.havvarselapp.SharedUiState
+import no.uio.ifi.in2000.team11.havvarselapp.ui.navigation.NavigationBarWithButtons
 import java.net.URL
 
 @Composable
@@ -104,4 +105,5 @@ fun SeaMapScreen(
             Text(text = if (hideOverlayButton.value) "Deaktiver Overlay" else "Aktiver Overlay")
         }
     }
+    NavigationBarWithButtons(navController = navController)
 }

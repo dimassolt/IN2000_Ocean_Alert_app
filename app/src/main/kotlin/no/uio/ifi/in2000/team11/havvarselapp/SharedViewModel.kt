@@ -20,7 +20,7 @@ data class SharedUiState(
     var currentLocation: LatLng = LatLng(59.9, 10.73),
 
     /**
-     * Liste of all met-alerts at the current location
+     * List of all met-alerts at the current location
      */
     val allMetAlerts: List<MetAlert> = listOf(),
 

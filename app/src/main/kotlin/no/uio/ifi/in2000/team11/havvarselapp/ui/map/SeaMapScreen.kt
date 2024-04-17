@@ -1,6 +1,7 @@
 package no.uio.ifi.in2000.team11.havvarselapp.ui.map
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -57,61 +58,63 @@ fun SeaMapScreen(
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(sharedUiState.currentLocation, 12f)
     }
+ Column (modifier = Modifier.fillMaxSize()){
 
-    Box(modifier = Modifier.fillMaxSize()) {
+     Box(modifier = Modifier.fillMaxSize().weight(1f)) {
 
-        // selve kartet
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-            onMapClick = { clickedPosition ->
-                updateLocation(clickedPosition)
-                seaMapViewModel.placeOrRemoveMarker()
-            },
-            properties = MapProperties(
-                // dette er utseende av kartet, som man finner i filen "mapstyle" i raw-mappen
-                mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle),
-            )
-        ) {
-            // kartlag fra OpenSeaMap
-            if (hideOverlayButton.value) {
-                TileOverlay(
-                    tileProvider = object : UrlTileProvider(256, 256) {
-                        override fun getTileUrl(x: Int, y: Int, z: Int): URL {
-                            return URL("https://t1.openseamap.org/seamark/$z/$x/$y.png")
-                        }
-                    }
-                )
-            }
-            // pin som plasseres på kartet der brukeren trykker
-            if (mapUiState.markerVisible) {
-                Marker(
-                    state = rememberMarkerState(position = sharedUiState.currentLocation),
-                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
-                )
-            }
+         // selve kartet
+         GoogleMap(
+             modifier = Modifier.fillMaxSize(),
+             cameraPositionState = cameraPositionState,
+             onMapClick = { clickedPosition ->
+                 updateLocation(clickedPosition)
+                 seaMapViewModel.placeOrRemoveMarker()
+             },
+             properties = MapProperties(
+                 // dette er utseende av kartet, som man finner i filen "mapstyle" i raw-mappen
+                 mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle),
+             )
+         ) {
+             // kartlag fra OpenSeaMap
+             if (hideOverlayButton.value) {
+                 TileOverlay(
+                     tileProvider = object : UrlTileProvider(256, 256) {
+                         override fun getTileUrl(x: Int, y: Int, z: Int): URL {
+                             return URL("https://t1.openseamap.org/seamark/$z/$x/$y.png")
+                         }
+                     }
+                 )
+             }
+             // pin som plasseres på kartet der brukeren trykker
+             if (mapUiState.markerVisible) {
+                 Marker(
+                     state = rememberMarkerState(position = sharedUiState.currentLocation),
+                     icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+                 )
+             }
 
-        }
-        autocompleteTextFieldActivity.AutocompleteTextField(
-            seaMapViewModel,
-            context,
-            updateLocation,
-            cameraPositionState,
-            placesClient
-        )
+         }
+         autocompleteTextFieldActivity.AutocompleteTextField(
+             seaMapViewModel,
+             context,
+             updateLocation,
+             cameraPositionState,
+             placesClient
+         )
 
-        // Knapp for å aktivere/deaktivere TileOverlay
-        Button(
-            onClick = { hideOverlayButton.value = !hideOverlayButton.value },
-            modifier = Modifier
-                .padding(start = 2.dp)
-                .align(Alignment.BottomStart),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF_13_23_2C)
-            )
-        ) {
-            Text(text = if (hideOverlayButton.value) "Deaktiver Overlay" else "Aktiver Overlay")
-        }
-    }
-    NavigationBarWithButtons(navController = navController)
+         // Knapp for å aktivere/deaktivere TileOverlay
+         Button(
+             onClick = { hideOverlayButton.value = !hideOverlayButton.value },
+             modifier = Modifier
+                 .padding(start = 2.dp)
+                 .align(Alignment.BottomStart),
+             colors = ButtonDefaults.buttonColors(
+                 containerColor = Color(0xFF_13_23_2C)
+             )
+         ) {
+             Text(text = if (hideOverlayButton.value) "Deaktiver Overlay" else "Aktiver Overlay")
+         }
+     }
+     NavigationBarWithButtons(navController = navController)
+     }
 }

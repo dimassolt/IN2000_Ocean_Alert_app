@@ -110,180 +110,188 @@ fun WeatherScreen(
     val fontNormal = fonts3[2]
     val fontBold = fonts3[3]
 
-    // knappene for vær og hav, sitter fast på bunn av siden
-    Scaffold(
-        bottomBar = { BottomNavBar(currentScreen = displayInfo, fontNormal) }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(innerPadding)
-        ) {
 
+    Column (modifier = Modifier.fillMaxSize()){
+
+        // knappene for vær og hav, sitter fast på bunn av siden
+        Scaffold( modifier = Modifier.weight(1f),
+            bottomBar = { BottomNavBar(currentScreen = displayInfo, fontNormal) }
+        ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(2.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            )
-            {
-                // øverste del av skjermen frem til tabellen
-                ScreenTop(
-                    forecastViewModel = forecastViewModel,
-                    displayInfo = displayInfo,
-                    fontNormal = fontNormal,
-                    fontBold = fontBold
-                )
+                    .padding(innerPadding)
+            ) {
 
-
-                // KORT med vær tabellen
-                Card(
+                Column(
                     modifier = Modifier
-                        .padding(start = 8.dp, end = 8.dp)
-                        .border(width = 1.dp, color = weatherRow2, shape = RoundedCornerShape(8.dp))
                         .fillMaxWidth()
+                        .padding(2.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
                 )
                 {
-                    // WEATHER SCREEN
-                    when (displayInfo.value) {
-                        DisplayInfo.Weather -> {
-                            // RAD MED IKON ØVERST
-                            WeatherHeader(headerColor = weatherHeader, font = fontNormal)
-                            // LASTER INN RADER MED VÆR-INFO
-                            if (forecastViewModel.forecastInfoUiState.collectAsState().value != null) {
-                                when (expanded.value) {
-
-                                    Expanded.Short -> {
-                                        var farge = true
-                                        for (i in 0..1) {
-                                            farge = if (farge) {
-                                                WeatherRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    weatherRow1,
-                                                    fontNormal
-                                                )
-                                                false
-                                            } else {
-                                                WeatherRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    weatherRow2,
-                                                    fontNormal
-                                                )
-                                                true
-                                            }
-                                        }
-                                        ShortToLongButton(expanded, weatherHeader, fontNormal)
-                                    }
-
-                                    Expanded.Long -> {
-                                        var farge = true
-                                        for (i in 0..8) {
-                                            farge = if (farge) {
-                                                WeatherRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    weatherRow1,
-                                                    fontNormal
-                                                )
-                                                false
-                                            } else {
-                                                WeatherRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    weatherRow2,
-                                                    fontNormal
-                                                )
-                                                true
-                                            }
-                                        }
-                                        ShortToLongButton(expanded, weatherHeader, fontNormal)
-                                    }
-                                }
-                            }
-                        }
-                        // VÆR-SKJERM SLUTT
-
-
-                        // OCEAN-SCREEN
-                        DisplayInfo.Sea -> {
-                            // RAD MED IKON ØVERST Oceanforecast
-                            OceanHeader(headerColor = oceanHeader, font = fontNormal)
-
-                            // LASTER INN RADENE MED HAV-INFO
-                            if (forecastViewModel.oceanForecastUiState.collectAsState().value != null) {
-                                when (expanded.value) {
-
-                                    Expanded.Short -> {
-                                        var farge = true
-                                        // ALLE RADENE med Hav-info
-                                        for (i in 0..1) {
-                                            farge = if (farge) {
-                                                OceanRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    oceanRow1,
-                                                    fontNormal
-                                                )
-                                                false
-                                            } else {
-                                                OceanRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    oceanRow2,
-                                                    fontNormal
-                                                )
-                                                true
-                                            }
-                                        }
-                                        ShortToLongButton(expanded, oceanHeader, fontNormal)
-                                    }
-
-                                    Expanded.Long -> {
-                                        var farge = true
-                                        // ALLE RADENE med Hav-info
-                                        for (i in 0..8) {
-                                            farge = if (farge) {
-                                                OceanRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    oceanRow1,
-                                                    fontNormal
-                                                )
-                                                false
-                                            } else {
-                                                OceanRow(
-                                                    forecastViewModel,
-                                                    i,
-                                                    oceanRow2,
-                                                    fontNormal
-                                                )
-                                                true
-                                            }
-                                        }
-                                        ShortToLongButton(expanded, oceanHeader, fontNormal)
-                                    }
-                                }
-                            }
-                        }
-                        // HAV-SKJERM SLUTT
-                    }
-                }
-
-                CurrentLocationAlert(
-                    region = "oslo",
-                    TextStyle(
-                        fontSize = 22.sp,
-                        fontFamily = fontNormal,
-                        fontWeight = FontWeight.ExtraBold
+                    // øverste del av skjermen frem til tabellen
+                    ScreenTop(
+                        forecastViewModel = forecastViewModel,
+                        displayInfo = displayInfo,
+                        fontNormal = fontNormal,
+                        fontBold = fontBold
                     )
-                )
+
+
+                    // KORT med vær tabellen
+                    Card(
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .border(
+                                width = 1.dp,
+                                color = weatherRow2,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .fillMaxWidth()
+                    )
+                    {
+                        // WEATHER SCREEN
+                        when (displayInfo.value) {
+                            DisplayInfo.Weather -> {
+                                // RAD MED IKON ØVERST
+                                WeatherHeader(headerColor = weatherHeader, font = fontNormal)
+                                // LASTER INN RADER MED VÆR-INFO
+                                if (forecastViewModel.forecastInfoUiState.collectAsState().value != null) {
+                                    when (expanded.value) {
+
+                                        Expanded.Short -> {
+                                            var farge = true
+                                            for (i in 0..1) {
+                                                farge = if (farge) {
+                                                    WeatherRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        weatherRow1,
+                                                        fontNormal
+                                                    )
+                                                    false
+                                                } else {
+                                                    WeatherRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        weatherRow2,
+                                                        fontNormal
+                                                    )
+                                                    true
+                                                }
+                                            }
+                                            ShortToLongButton(expanded, weatherHeader, fontNormal)
+                                        }
+
+                                        Expanded.Long -> {
+                                            var farge = true
+                                            for (i in 0..8) {
+                                                farge = if (farge) {
+                                                    WeatherRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        weatherRow1,
+                                                        fontNormal
+                                                    )
+                                                    false
+                                                } else {
+                                                    WeatherRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        weatherRow2,
+                                                        fontNormal
+                                                    )
+                                                    true
+                                                }
+                                            }
+                                            ShortToLongButton(expanded, weatherHeader, fontNormal)
+                                        }
+                                    }
+                                }
+                            }
+                            // VÆR-SKJERM SLUTT
+
+
+                            // OCEAN-SCREEN
+                            DisplayInfo.Sea -> {
+                                // RAD MED IKON ØVERST Oceanforecast
+                                OceanHeader(headerColor = oceanHeader, font = fontNormal)
+
+                                // LASTER INN RADENE MED HAV-INFO
+                                if (forecastViewModel.oceanForecastUiState.collectAsState().value != null) {
+                                    when (expanded.value) {
+
+                                        Expanded.Short -> {
+                                            var farge = true
+                                            // ALLE RADENE med Hav-info
+                                            for (i in 0..1) {
+                                                farge = if (farge) {
+                                                    OceanRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        oceanRow1,
+                                                        fontNormal
+                                                    )
+                                                    false
+                                                } else {
+                                                    OceanRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        oceanRow2,
+                                                        fontNormal
+                                                    )
+                                                    true
+                                                }
+                                            }
+                                            ShortToLongButton(expanded, oceanHeader, fontNormal)
+                                        }
+
+                                        Expanded.Long -> {
+                                            var farge = true
+                                            // ALLE RADENE med Hav-info
+                                            for (i in 0..8) {
+                                                farge = if (farge) {
+                                                    OceanRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        oceanRow1,
+                                                        fontNormal
+                                                    )
+                                                    false
+                                                } else {
+                                                    OceanRow(
+                                                        forecastViewModel,
+                                                        i,
+                                                        oceanRow2,
+                                                        fontNormal
+                                                    )
+                                                    true
+                                                }
+                                            }
+                                            ShortToLongButton(expanded, oceanHeader, fontNormal)
+                                        }
+                                    }
+                                }
+                            }
+                            // HAV-SKJERM SLUTT
+                        }
+                    }
+
+                    CurrentLocationAlert(
+                        region = "oslo",
+                        TextStyle(
+                            fontSize = 22.sp,
+                            fontFamily = fontNormal,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    )
+                }
             }
         }
+        NavigationBarWithButtons(navController = navController)
     }
-    NavigationBarWithButtons(navController = navController)
 }
 
 

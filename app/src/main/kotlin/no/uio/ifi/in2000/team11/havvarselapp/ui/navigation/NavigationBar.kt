@@ -10,9 +10,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.outlined.WbCloudy
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -100,9 +105,14 @@ fun NavigationBar(
 @Composable
 fun NavigationBarWithButtons(navController: NavController) {
 
-    val pos = Color(69, 79, 92, 167)
-    val neg = Color(19, 35, 44, 255)
+    val white = Color(69, 79, 92, 167)
+    val gray = Color(19, 35, 44, 255)
     val boardersWidth = 2.dp
+    val activeColor = gray// Color when button is selected
+    val inactiveColor = white // Color when button is unselected
+
+    var selectedButtonMap by remember { mutableStateOf(true)}
+    var selectedButtonWeather by remember { mutableStateOf(false)}
 
     Column (modifier = Modifier
         .fillMaxWidth(),
@@ -119,11 +129,18 @@ fun NavigationBarWithButtons(navController: NavController) {
                 .weight(1f)
                 .border(
                     width = boardersWidth,
-                    color = neg,
+                    color = if (selectedButtonMap == true) activeColor else inactiveColor,
                     shape = RectangleShape
                 ), onClick = {
+                selectedButtonMap = true
                 navController.navigate("seamap_screen")
-            }, shape = RectangleShape,
+                selectedButtonWeather = false
+            }, colors = ButtonDefaults.buttonColors(
+
+                if (selectedButtonMap == true) activeColor else inactiveColor
+
+            )
+                , shape = RectangleShape,
 
                 ) {
                 ButtonMapContext()
@@ -133,11 +150,15 @@ fun NavigationBarWithButtons(navController: NavController) {
                 .weight(1f)
                 .border(
                     width = boardersWidth,
-                    color = neg,
+                    color = if (selectedButtonWeather == true) activeColor else inactiveColor,
                     shape = RectangleShape
                 ), onClick = {
+                selectedButtonWeather = true
                 navController.navigate("weather_screen")
-            }, shape = RectangleShape
+                selectedButtonMap = false
+            }, colors = ButtonDefaults.buttonColors(
+                if (selectedButtonWeather == true) activeColor else inactiveColor
+            ), shape = RectangleShape
 
             ) {
                 ButtonWeatherContext ()
